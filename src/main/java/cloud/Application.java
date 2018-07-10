@@ -17,7 +17,12 @@ public class Application {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**").allowedOrigins("http://localhost:3000");
                 registry.addMapping("/**").allowedOrigins("http://www.clavier.moe:3000");
-                registry.addMapping("/**").allowedOrigins("**");
+                registry.addMapping("/**").allowedOrigins("*").allowedMethods("PUT", "DELETE", "GET", "POST")
+                        .allowedHeaders("*")
+                        .exposedHeaders("access-control-allow-headers", "access-control-allow-methods",
+                                "access-control-allow-origin", "access-control-max-age", "X-Frame-Options")
+                        .allowCredentials(false).maxAge(3600);
+
             }
         };
     }
