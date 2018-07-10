@@ -17,6 +17,7 @@ public class Application {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**").allowedOrigins("http://localhost:3000");
                 registry.addMapping("/**").allowedOrigins("http://www.clavier.moe:3000");
+                registry.addMapping("/**").allowedOrigins("**");
             }
         };
     }
