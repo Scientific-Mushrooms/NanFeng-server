@@ -22,6 +22,20 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public User userIdToUser(String id) {
+        return userRepository.findById(id);
+    }
+
+    public User create(String email, String password) {
+
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setName("default");
+        userRepository.save(user);
+
+        return user;
+    }
 
     public void increasePostByOne(String id) {
         User user = userRepository.findById(id);

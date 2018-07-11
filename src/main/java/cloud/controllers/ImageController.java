@@ -24,16 +24,20 @@ public class ImageController extends BaseController {
     @Resource
     private ImageService imageService;
 
-    @GetMapping("/images/list")
+    @GetMapping("/image/all")
     public Iterable<Image> list() {
         return imageRepository.findAll();
     }
 
-    @GetMapping(value = { "/images/{filename:.+}" },
+    @GetMapping(value = { "/image/{filename:.+}" },
             produces = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_PNG_VALUE })
     public byte[] getImg(@PathVariable String filename) {
 
-        Path path = Paths.get("/Users/mac/Desktop/java-spring-rest-api/upload/" + filename);
+        // for ubuntu server
+        Path path = Paths.get("/home/backend/upload/" + filename);
+
+        // for mac
+        // Path path = Paths.get("/Users/mac/Desktop/java-spring-rest-api/upload/" + filename);
         byte[] data = null;
 
         try {
