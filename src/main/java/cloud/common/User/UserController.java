@@ -3,7 +3,7 @@ package cloud.common.User;
 
 import cloud.common.BaseController;
 import cloud.common.Result;
-import cloud.repositories.FollowRepository;
+import cloud.common.repositories.FollowRepository;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
