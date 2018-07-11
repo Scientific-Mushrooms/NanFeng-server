@@ -11,8 +11,28 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService {
 
+
     @Autowired
     private UserRepository userRepository;
+
+    public User create(String email, String password) {
+
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setName("default");
+        userRepository.save(user);
+
+        return user;
+    }
+
+    public void deleteByUserId(String userId) {
+
+        userRepository.deleteById(userId);
+    }
+
+
+
 
     public String userIdToUserName(String id) {
         return userRepository.findById(id).getName();
@@ -26,16 +46,6 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public User create(String email, String password) {
-
-        User user = new User();
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setName("default");
-        userRepository.save(user);
-
-        return user;
-    }
 
     public void increasePostByOne(String id) {
         User user = userRepository.findById(id);

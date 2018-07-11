@@ -2,24 +2,26 @@ package cloud.common.User;
 
 
 import cloud.common.BaseController;
+import cloud.common.FollowRepository;
 import cloud.common.Result;
-import cloud.common.repositories.FollowRepository;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@Api(value = "User", description = "User operations")
 public class UserController extends BaseController {
 
 
     @Autowired
     private UserRepository userRepository;
+
+    @Resource
+    private UserService userService;
 
     @Autowired
     private FollowRepository followRepository;
@@ -41,26 +43,20 @@ public class UserController extends BaseController {
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String name = request.getParameter("name");
 
         if (userRepository.existsByEmail(email)) {
             return new Result("fail", "duplicate email");
         }
 
-        User user = new User();
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setName(name);
-        user.setAvatar("default_avatar.png");
-        userRepository.save(user);
+        User user = userService.create(email, password);
 
         return new Result("success", "nothing", user);
     }
 
-    @PostMapping("/user/deleteById")
+    @PostMapping("/user/deleteByUserId")
     public Result deleteById(HttpServletRequest request) {
 
-        String id = request.getParameter("id");
+        String id = request.getParameter("userId");
 
         if (!userRepository.existsById(id)) {
             return new Result("fail", "user not exist");

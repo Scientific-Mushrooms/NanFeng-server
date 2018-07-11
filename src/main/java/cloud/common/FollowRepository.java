@@ -1,4 +1,4 @@
-package cloud.common.repositories;
+package cloud.common;
 
 import cloud.common.Follow;
 import org.springframework.data.repository.CrudRepository;

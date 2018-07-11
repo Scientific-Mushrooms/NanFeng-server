@@ -1,9 +1,8 @@
-package cloud.module.course;
-
+package cloud.module.course.courseMember;
 
 import cloud.common.BaseController;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class CourseController extends BaseController {
+public class CourseMemberController extends BaseController {
 }

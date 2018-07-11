@@ -1,13 +1,11 @@
 package cloud.common;
 
-import cloud.common.BaseController;
 import cloud.common.User.UserRepository;
-import cloud.common.Result;
-import cloud.common.repositories.FollowRepository;
-import cloud.common.Follow;
 import cloud.common.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
