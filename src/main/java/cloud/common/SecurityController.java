@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@Api(value = "User", description = "User operations")
 public class SecurityController extends BaseController {
 
     @Autowired
