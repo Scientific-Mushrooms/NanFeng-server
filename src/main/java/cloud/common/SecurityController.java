@@ -5,7 +5,6 @@ import cloud.common.User.UserRepository;
 import cloud.common.User.UserService;
 import cloud.common.Result;
 import cloud.common.User.User;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +23,7 @@ public class SecurityController extends BaseController {
     @Resource
     private UserService userService;
 
-    @PostMapping("/user/login")
+    @PostMapping("/security/login")
     public Result login(HttpServletRequest request) {
 
         String email = request.getParameter("email");
