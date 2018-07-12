@@ -9,10 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    boolean existsByPhoneNumber(String phoneNumber);
-
-    User findByPhoneNumber(String phoneNumber);
-
     void deleteById(String userId);
 
     User findById(String id);
