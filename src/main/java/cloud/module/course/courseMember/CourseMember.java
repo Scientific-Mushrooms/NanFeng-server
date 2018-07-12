@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
 @Table(name = "CourseMember")
@@ -17,4 +18,12 @@ public class CourseMember {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
+
+    private String userId;
+
+    private String courseId;
+
+    private String role;
+
+    private Date date;
 }

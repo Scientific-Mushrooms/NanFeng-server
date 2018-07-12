@@ -28,5 +28,7 @@ public class Course {
 
     private String courseIntro;
 
-    private Date createDate;
+    private Date startDate;
+
+    private Date endDate;
 }
