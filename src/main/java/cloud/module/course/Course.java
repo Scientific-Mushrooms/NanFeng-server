@@ -24,11 +24,29 @@ public class Course {
 
     private String courseName;
 
-    private String courseProf;
+    private String courseProfessorName;
 
-    private String courseIntro;
+    private String courseProfessorId;
 
-    private Date startDate;
+    private String courseIntroduction;
 
-    private Date endDate;
+    private String courseLocation;
+
+    private String courseCredit;
+
+    private String courseAvatar;
+
+
+    private Integer courseRatingNum;
+
+    private Integer courseLikeNum;
+
+    private Integer courseUsefulNum;
+
+    private Integer courseEasyNum;
+
+
+    private Date courseStartDate;
+
+    private Date courseEndDate;
 }

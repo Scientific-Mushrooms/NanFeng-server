@@ -4,7 +4,9 @@ package cloud.module.course;
 import cloud.common.BaseController;
 import cloud.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,18 +31,8 @@ public class CourseController extends BaseController {
     }
 
     @PostMapping("/course/create")
-    public Result create(HttpServletRequest request) {
+    public Result create(@ModelAttribute Course course) {
 
-        String courseName = request.getParameter("courseName");
-        String courseCode = request.getParameter("courseCode");
-        String courseProf = request.getParameter("courseProf");
-        String courseIntro = request.getParameter("courseIntro");
-
-        Course course = new Course();
-        course.setCourseCode(courseCode);
-        course.setCourseIntro(courseIntro);
-        course.setCourseName(courseName);
-        course.setCourseProf(courseProf);
         courseRepository.save(course);
 
         return new Result("success", "create course", course);

@@ -23,7 +23,8 @@ public class CourseMember {
 
     private String courseId;
 
+    private String courseName;
+
     private String role;
 
-    private Date date;
 }
