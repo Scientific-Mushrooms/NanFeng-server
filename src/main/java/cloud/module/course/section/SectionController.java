@@ -5,6 +5,7 @@ import cloud.common.BaseController;
 import cloud.common.Result;
 import cloud.module.course.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,9 +25,13 @@ public class SectionController extends BaseController {
     }
 
     @PostMapping("/section/create")
-    public Result create(HttpServletRequest request) {
+    public Result create(@ModelAttribute Section section) {
 
-        return new Result("success", "create section");
+        section.setEnrolledStudentNum(0);
+
+        sectionRepository.save(section);
+
+        return new Result("success", "create section", section);
     }
 
 

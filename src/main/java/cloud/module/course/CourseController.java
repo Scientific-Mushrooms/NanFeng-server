@@ -53,5 +53,15 @@ public class CourseController extends BaseController {
         return new Result("success", "delete course");
     }
 
+    @PostMapping("/course/courseIdToCourse")
+    public Result courseIdToCourse(HttpServletRequest request) {
+
+        String courseId = request.getParameter("courseId");
+
+        Course course = courseRepository.findByCourseId(courseId);
+
+        return new Result("success", "create course", course);
+    }
+
 
 }

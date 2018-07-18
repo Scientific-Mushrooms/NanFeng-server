@@ -19,19 +19,24 @@ public class Section {
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String sectionId;
 
+    private String sectionCode;
+
     private String courseId;
 
     private String courseName;
 
-    private String professorId;
+    private String instructorId;
 
-    private String professorName;
+    private String instructorName;
 
-    private Integer currentStudentNum;
+    private Integer enrolledStudentNum;
 
     private Integer maxStudentNum;
 
-    private Date startDate;
+    private String location;
 
-    private Date endDate;
+    private String term;
+
+    private String time;
+
 }

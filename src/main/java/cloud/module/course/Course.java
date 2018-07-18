@@ -24,18 +24,15 @@ public class Course {
 
     private String name;
 
-    private String professorName;
+    private String instructorName;
 
-    private String professorId;
+    private String instructorId;
 
     private String introduction;
-
-    private String location;
 
     private String credit;
 
     private String avatar;
-
 
     private Integer ratingNum;
 
@@ -45,9 +42,4 @@ public class Course {
 
     private Integer easyNum;
 
-
-
-    private Date startDate;
-
-    private Date endDate;
 }
