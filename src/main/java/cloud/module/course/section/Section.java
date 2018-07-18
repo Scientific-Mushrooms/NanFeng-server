@@ -1,5 +1,4 @@
-package cloud.module.course;
-
+package cloud.module.course.section;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
@@ -11,41 +10,26 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name = "Course")
+@Table(name = "Section")
 @Data
-public class Course {
+public class Section {
 
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    private String sectionId;
+
     private String courseId;
 
-    private String code;
-
-    private String name;
-
-    private String professorName;
+    private String courseName;
 
     private String professorId;
 
-    private String introduction;
+    private String professorName;
 
-    private String location;
+    private Integer currentStudentNum;
 
-    private String credit;
-
-    private String avatar;
-
-
-    private Integer ratingNum;
-
-    private Integer likeNum;
-
-    private Integer usefulNum;
-
-    private Integer easyNum;
-
-
+    private Integer maxStudentNum;
 
     private Date startDate;
 

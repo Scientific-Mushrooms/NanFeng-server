@@ -14,27 +14,12 @@ public interface CourseRepository extends CrudRepository<Course, String> {
     void deleteByCourseId(String courseId);
 
     @Modifying
-    @Query("update Course c set c.courseCode = ?1 where c.courseId = ?2")
+    @Query("update Course c set c.startDate = ?1 where c.courseId = ?2")
     @Transactional
-    void updateCourseCode(String courseCode, String courseId);
+    void updateStartDate(Date startDate, String courseId);
 
     @Modifying
-    @Query("update Course c set c.courseName = ?1 where c.courseId = ?2")
+    @Query("update Course c set c.endDate = ?1 where c.courseId = ?2")
     @Transactional
-    void updateCourseName(String courseName, String courseId);
-
-    @Modifying
-    @Query("update Course c set c.courseIntroduction = ?1 where c.courseId = ?2")
-    @Transactional
-    void updateCourseIntro(String courseIntroduction, String courseId);
-
-    @Modifying
-    @Query("update Course c set c.courseStartDate = ?1 where c.courseId = ?2")
-    @Transactional
-    void updateStartDate(Date courseStartDate, String courseId);
-
-    @Modifying
-    @Query("update Course c set c.courseEndDate = ?1 where c.courseId = ?2")
-    @Transactional
-    void updateEndDate(Date courseEndDate, String courseId);
+    void updateEndDate(Date endDate, String courseId);
 }

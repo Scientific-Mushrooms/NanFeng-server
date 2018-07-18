@@ -33,6 +33,11 @@ public class CourseController extends BaseController {
     @PostMapping("/course/create")
     public Result create(@ModelAttribute Course course) {
 
+        course.setEasyNum(0);
+        course.setLikeNum(0);
+        course.setUsefulNum(0);
+        course.setRatingNum(0);
+
         courseRepository.save(course);
 
         return new Result("success", "create course", course);
