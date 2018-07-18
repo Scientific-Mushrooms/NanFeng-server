@@ -34,6 +34,15 @@ public class SectionController extends BaseController {
         return new Result("success", "create section", section);
     }
 
+    @PostMapping("/section/del")
+    public Result del(HttpServletRequest request) {
+
+        String sectionId = request.getParameter("sectionId");
+
+        sectionRepository.deleteBySectionId(sectionId);
+
+        return new Result("success", "delete section");
+    }
 
     @PostMapping("/section/sectionIdToSection")
     public Result sectionIdToSection(HttpServletRequest request) {
@@ -44,6 +53,8 @@ public class SectionController extends BaseController {
 
         return new Result("success", "section id to section", section);
     }
+
+
 
 
 }
