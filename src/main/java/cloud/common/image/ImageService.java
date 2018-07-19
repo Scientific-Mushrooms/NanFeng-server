@@ -21,7 +21,11 @@ public class ImageService {
     @Autowired
     private ImageRepository imageRepository;
 
-    private String currentPath = "/Users/mac/Desktop/backend/upload/";
+//     for mac
+//    private String currentPath = "/Users/mac/Desktop/backend/upload/";
+
+//     for ubuntu server
+    private String currentPath = "/home/backend/upload/";
 
     public String imageIdToImagePath(String imageId) {
 
