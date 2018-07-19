@@ -25,10 +25,10 @@ public class ImageService {
     private ImageRepository imageRepository;
 
 //     for mac
-//    private String currentPath = "/Users/mac/Desktop/backend/upload/";
+    private String currentPath = "/Users/mac/Desktop/backend/upload/";
 
 //     for ubuntu server
-    private String currentPath = "/home/backend/upload/";
+//    private String currentPath = "/home/backend/upload/";
 
     public byte[] showImage(String fileName) {
 

@@ -2,10 +2,11 @@ package cloud.common.User;
 
 
 import cloud.common.BaseController;
-import cloud.common.FollowRepository;
 import cloud.common.Result;
+import cloud.common.image.Image;
 import cloud.common.image.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,10 +28,6 @@ public class UserController extends BaseController {
     @Resource
     private ImageService imageService;
 
-    @Autowired
-    private FollowRepository followRepository;
-
-
     @PostMapping("/user/all")
     public Iterable<User> all(HttpServletRequest request) {
         return userRepository.findAll();
@@ -43,45 +40,78 @@ public class UserController extends BaseController {
     }
 
     @PostMapping("/user/create")
-    public Result create(HttpServletRequest request) {
+    public Result create(@ModelAttribute User user) {
 
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-
-        if (userRepository.existsByEmail(email)) {
+        // validation
+        if (user.getEmail() == null || user.getPassword() == null) {
+            return new Result("fail", "can not be empty");
+        }
+        if (userRepository.existsByEmail(user.getEmail())) {
             return new Result("fail", "duplicate email");
         }
 
-        User user = userService.create(email, password);
+        user.setAvatarPath("default_avatar.jpg");
+        userRepository.save(user);
 
-        return new Result("success", "nothing", user);
+        return new Result("success", "create user", user);
     }
 
-    @PostMapping("/user/deleteByUserId")
-    public Result deleteById(HttpServletRequest request) {
+    @PostMapping("/user/del")
+    public Result del(HttpServletRequest request) {
 
-        String id = request.getParameter("userId");
+        String userId = request.getParameter("userId");
 
-        if (!userRepository.existsById(id)) {
-            return new Result("fail", "user not exist");
-        }
-        userRepository.deleteById(id);
+        userRepository.deleteByUserId(userId);
 
         return new Result("success");
     }
+
+
+
+
 
 
     @PostMapping("/user/updateAvatar")
     public Result updateAvatar(HttpServletRequest request, @RequestParam("avatar") MultipartFile avatar) {
 
         String userId = request.getParameter("userId");
-        imageService.saveImage(avatar, null, null);
 
-        if (!userRepository.existsById(userId)) {
-            return new Result("fail", "user not exist");
-        }
+        userService.updateAvatar(userId, avatar);
 
-        return new Result("success", "update the avatar");
+        return new Result("success", "update user avatar");
+    }
+
+    @PostMapping("/user/updateNickName")
+    public Result updateNickName(HttpServletRequest request) {
+
+        String userId = request.getParameter("userId");
+        String nickName = request.getParameter("nickName");
+
+        userService.updateNickName(userId, nickName);
+
+        return new Result("success", "update user nickName");
+    }
+
+    @PostMapping("/user/updatePassword")
+    public Result updatePassword(HttpServletRequest request) {
+
+        String userId = request.getParameter("userId");
+        String password = request.getParameter("password");
+
+        userService.updatePassword(userId, password);
+
+        return new Result("success", "update user password");
+    }
+
+    @PostMapping("/user/updateEmail")
+    public Result updateEmail(HttpServletRequest request) {
+
+        String userId = request.getParameter("userId");
+        String email = request.getParameter("email");
+
+        userService.updateEmail(userId, email);
+
+        return new Result("success", "update user email");
     }
 
 

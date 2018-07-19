@@ -7,40 +7,41 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<User, String> {
 
-    void deleteById(String userId);
-
-    User findById(String id);
+    void deleteByUserId(String userId);
 
     boolean existsById(String userId);
-
-    @Modifying
-    @Query("update User u set u.post = ?1, u.following= ?2 where u.id = ?3")
-    @Transactional
-    void setUserInfoById(Integer post, Integer following, String userId);
-
-    @Modifying
-    @Query("update User u set u.post = ?1 where u.id = ?2")
-    @Transactional
-    void updatePostById(Integer post, String userId);
-
-    @Modifying
-    @Query("update User u set u.follower = ?1 where u.id = ?2")
-    @Transactional
-    void updateFollowerById(Integer follower, String userId);
-
-    @Modifying
-    @Query("update User u set u.following = ?1 where u.id = ?2")
-    @Transactional
-    void updateFollowingById(Integer following, String userId);
-
-    @Modifying
-    @Query("update User u set u.avatar = ?1 where u.id = ?2")
-    @Transactional
-    void updateAvatarById(String avatar, String userId);
 
     boolean existsByEmail(String email);
 
     User findByEmail(String email);
+
+    User findByUserId(String id);
+
+
+    @Modifying
+    @Query("update User u set u.avatarPath = ?1 where u.userId = ?2")
+    @Transactional
+    void updateAvatarPathByUserId(String avatarPath, String userId);
+
+    @Modifying
+    @Query("update User u set u.avatarId = ?1 where u.userId = ?2")
+    @Transactional
+    void updateAvatarIdByUserId(String avatarPath, String userId);
+
+    @Modifying
+    @Query("update User u set u.password = ?1 where u.userId = ?2")
+    @Transactional
+    void updatePasswordByUserId(String password, String userId);
+
+    @Modifying
+    @Query("update User u set u.nickName = ?1 where u.userId = ?2")
+    @Transactional
+    void updateNickNameByUserId(String nickName, String userId);
+
+    @Modifying
+    @Query("update User u set u.email = ?1 where u.userId = ?2")
+    @Transactional
+    void updateEmailByUserId(String email, String userId);
 }

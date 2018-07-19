@@ -48,13 +48,8 @@ public class SecurityController extends BaseController {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        if (userRepository.existsByEmail(email)) {
-            return new Result("fail", "email has been used");
-        }
 
-        User user = userService.create(email, password);
-
-        return new Result("success", "good", user);
+        return new Result("success", "good");
     }
 
     @GetMapping("/user/logout")

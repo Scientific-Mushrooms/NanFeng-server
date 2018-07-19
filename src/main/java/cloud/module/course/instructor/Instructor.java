@@ -23,7 +23,7 @@ public class Instructor {
 
     private String name;
 
-    private String avatar;
+    private String avatarPath;
 
     private Integer totalRatingNum;
 

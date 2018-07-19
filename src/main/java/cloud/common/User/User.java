@@ -13,22 +13,16 @@ public class User {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private String id;
+    private String userId;
 
     private String email;
 
     private String password;
 
-    private String name;
+    private String nickName;
 
-    private String phoneNumber;
+    private String avatarPath;
 
-    private String avatar;
-
-    private Integer follower;
-
-    private Integer following;
-
-    private Integer post;
+    private String avatarId;
 
 }

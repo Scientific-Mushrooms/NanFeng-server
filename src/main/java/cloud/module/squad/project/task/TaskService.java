@@ -53,7 +53,7 @@ public class TaskService {
             data.setDate(task.getDate());
             data.setType(task.getType());
             data.setLevel(task.getLevel());
-            data.setOwnerName(userService.userIdToUserName(task.getCreatorId()));
+
             results.add(data);
         }
 

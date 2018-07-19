@@ -24,16 +24,6 @@ public class SectionController extends BaseController {
         return sectionRepository.findAll();
     }
 
-    @PostMapping("/section/create")
-    public Result create(@ModelAttribute Section section) {
-
-        section.setEnrolledStudentNum(0);
-
-        sectionRepository.save(section);
-
-        return new Result("success", "create section", section);
-    }
-
     @PostMapping("/section/del")
     public Result del(HttpServletRequest request) {
 
@@ -42,6 +32,24 @@ public class SectionController extends BaseController {
         sectionRepository.deleteBySectionId(sectionId);
 
         return new Result("success", "delete section");
+    }
+
+    @PostMapping("/section/delAll")
+    public Result delAll(HttpServletRequest request) {
+
+        sectionRepository.deleteAll();
+
+        return new Result("success", "delete all");
+    }
+
+    @PostMapping("/section/create")
+    public Result create(@ModelAttribute Section section) {
+
+        section.setEnrolledStudentNum(0);
+
+        sectionRepository.save(section);
+
+        return new Result("success", "create section", section);
     }
 
     @PostMapping("/section/sectionIdToSection")

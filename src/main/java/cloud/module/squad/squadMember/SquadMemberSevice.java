@@ -37,7 +37,7 @@ public class SquadMemberSevice {
 
         for (SquadMember squadMember : squadMembers) {
             String userId = squadMember.getUserId();
-            String name = userService.userIdToUserName(userId);
+            String name = "";
             int contribution = squadMember.getContribution();
 
             DataForRankChart dataForRankChart = new DataForRankChart();

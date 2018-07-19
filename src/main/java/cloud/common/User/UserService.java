@@ -2,9 +2,14 @@ package cloud.common.User;
 
 import cloud.common.User.User;
 import cloud.common.User.UserRepository;
+import cloud.common.image.Image;
+import cloud.common.image.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
 
 
 @Transactional
@@ -15,73 +20,51 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User create(String email, String password) {
+    @Resource
+    private ImageService imageService;
 
-        User user = new User();
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setName("default");
-        userRepository.save(user);
-
-        return user;
-    }
-
-    public void deleteByUserId(String userId) {
-
-        userRepository.deleteById(userId);
-    }
-
-
-
-
-    public String userIdToUserName(String id) {
-        return userRepository.findById(id).getName();
-    }
-
-    public User findById(String id) {
-        return userRepository.findById(id);
-    }
 
     public User userIdToUser(String id) {
-        return userRepository.findById(id);
+        return userRepository.findByUserId(id);
     }
 
 
-    public void increasePostByOne(String id) {
-        User user = userRepository.findById(id);
-        int post = user.getPost() + 1;
-        userRepository.updatePostById(post, id);
+
+
+    public void updateAvatar(String userId, MultipartFile avatar) {
+
+        User user = userIdToUser(userId);
+
+        // new avatar in image db
+        Image image = imageService.saveImage(avatar, userId, "avatar");
+
+        // delete the image in the server
+        if (user.getAvatarId() != null) {
+            imageService.deleteImageById(user.getAvatarId());
+        }
+
+        // replace the old avatar path and id with new data
+        userRepository.updateAvatarIdByUserId(image.getImageId(), userId);
+        userRepository.updateAvatarPathByUserId(image.getPath(), userId);
+
     }
 
-    public void decreasePostByOne(String id) {
-        User user = userRepository.findById(id);
-        int post = user.getPost() - 1;
-        userRepository.updatePostById(post, id);
+    public void updateEmail(String userId, String email) {
+
+        userRepository.updateEmailByUserId(email, userId);
+
     }
 
-    public void increaseFollowerByOne(String id) {
-        User user = userRepository.findById(id);
-        int post = user.getFollower() + 1;
-        userRepository.updateFollowerById(post, id);
+    public void updatePassword(String userId, String password) {
+
+        userRepository.updatePasswordByUserId(password, userId);
+
     }
 
-    public void decreaseFollowerByOne(String id) {
-        User user = userRepository.findById(id);
-        int post = user.getFollower() - 1;
-        userRepository.updateFollowerById(post, id);
-    }
+    public void updateNickName(String userId, String nickName) {
 
-    public void increaseFollowingByOne(String id) {
-        User user = userRepository.findById(id);
-        int post = user.getFollowing() + 1;
-        userRepository.updateFollowingById(post, id);
-    }
+        userRepository.updateNickNameByUserId(nickName, userId);
 
-    public void decreaseFollowingByOne(String id) {
-        User user = userRepository.findById(id);
-        int post = user.getFollowing() - 1;
-        userRepository.updateFollowingById(post, id);
     }
-
 
 }
