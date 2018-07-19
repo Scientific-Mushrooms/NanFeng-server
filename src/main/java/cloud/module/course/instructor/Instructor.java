@@ -19,11 +19,15 @@ public class Instructor {
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String instructorId;
 
+    private String userId;
+
     private String code;
 
-    private String name;
+    private String realName;
 
-    private String avatarPath;
+    private String faculty;
+
+    private String office;
 
     private Integer totalRatingNum;
 

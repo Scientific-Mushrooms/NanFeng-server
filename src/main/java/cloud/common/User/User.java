@@ -25,4 +25,6 @@ public class User {
 
     private String avatarId;
 
+    private String instructorId;
+
 }
