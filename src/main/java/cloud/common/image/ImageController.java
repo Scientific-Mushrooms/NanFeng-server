@@ -71,20 +71,7 @@ public class ImageController extends BaseController {
             produces = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_PNG_VALUE })
     public byte[] getImg(@PathVariable String filename) {
 
-        // for ubuntu server
-//        Path path = Paths.get("/home/backend/upload/" + filename);
-
-        // for mac
-         Path path = Paths.get("/Users/mac/Desktop/backend/upload/" + filename);
-        byte[] data = null;
-
-        try {
-            data = Files.readAllBytes(path);
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
-        return data;
+        return imageService.showImage(filename);
     }
 }
 

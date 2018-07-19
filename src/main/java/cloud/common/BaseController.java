@@ -20,6 +20,8 @@ public class BaseController {
     @Autowired
     private UserRepository userRepository;
 
+    public String currentPath = "/home/backend/upload/";
+
     public Date stringToDate(String paramDate) throws ParseException {
         String realDate = paramDate.substring(1, 20) + ".000+0000";
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");

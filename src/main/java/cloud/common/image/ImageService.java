@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -22,10 +25,22 @@ public class ImageService {
     private ImageRepository imageRepository;
 
 //     for mac
-//    private String currentPath = "/Users/mac/Desktop/backend/upload/";
+    private String currentPath = "/Users/mac/Desktop/backend/upload/";
 
 //     for ubuntu server
-    private String currentPath = "/home/backend/upload/";
+//    private String currentPath = "/home/backend/upload/";
+
+    public byte[] showImage(String fileName) {
+
+        byte[] data = null;
+        Path path = Paths.get(currentPath + fileName);
+        try {
+            data = Files.readAllBytes(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
 
     public String imageIdToImagePath(String imageId) {
 
