@@ -60,7 +60,7 @@ public class ConfessWallController extends BaseController {
         post.setDate(new Date());
         postRepository.save(post);
 
-        Result result = imageService.saveImagesById(authorId, images);
+
 
         return new Result("success");
     }

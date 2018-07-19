@@ -1,11 +1,14 @@
 package cloud.common.image;
 
 import cloud.common.BaseController;
+import cloud.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,9 +24,47 @@ public class ImageController extends BaseController {
     @Resource
     private ImageService imageService;
 
-    @GetMapping("/image/all")
-    public Iterable<Image> list() {
-        return imageRepository.findAll();
+    @PostMapping("/image/all")
+    public Result all() {
+
+        Iterable<Image> images = imageRepository.findAll();
+        return new Result("success", "all images", images);
+    }
+
+    @PostMapping("/image/deleteByImageId")
+    public Result del(HttpServletRequest request) {
+        String imageId = request.getParameter("imageId");
+        imageRepository.deleteByImageId(imageId);
+        return new Result("success", "delete by id");
+    }
+
+    @PostMapping("/image/deleteAllByParentId")
+    public Result deleteAllByParentId(HttpServletRequest request) {
+        String parentId = request.getParameter("parentId");
+        imageService.deleteAllByParentId(parentId);
+        return new Result("success", "delete by parent id");
+    }
+
+    @PostMapping("/image/saveImage")
+    public Result saveImage(HttpServletRequest request, @RequestParam("image") MultipartFile image) {
+
+        String parent = request.getParameter("parentId");
+        String type = request.getParameter("type");
+
+        Image file = imageService.saveImage(image, parent, type);
+
+        return new Result("success", "save one image", file);
+    }
+
+    @PostMapping("/image/saveImages")
+    public Result saveImages(HttpServletRequest request, @RequestParam("image") MultipartFile[] images) {
+
+        String parent = request.getParameter("parentId");
+        String type = request.getParameter("type");
+
+        Iterable<Image> files = imageService.saveImages(images, parent, type);
+
+        return new Result("success", "save images", files);
     }
 
     @GetMapping(value = { "/image/{filename:.+}" },
@@ -31,10 +72,10 @@ public class ImageController extends BaseController {
     public byte[] getImg(@PathVariable String filename) {
 
         // for ubuntu server
-        Path path = Paths.get("/home/backend/upload/" + filename);
+//        Path path = Paths.get("/home/backend/upload/" + filename);
 
         // for mac
-        // Path path = Paths.get("/Users/mac/Desktop/java-spring-rest-api/upload/" + filename);
+         Path path = Paths.get("/Users/mac/Desktop/backend/upload/" + filename);
         byte[] data = null;
 
         try {

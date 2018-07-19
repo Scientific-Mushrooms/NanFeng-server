@@ -17,9 +17,11 @@ public class Image {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private String id;
+    private String imageId;
 
-    private String parent;
+    private String type;
+
+    private String parentId;
 
     private String path;
 }

@@ -21,79 +21,95 @@ public class ImageService {
     @Autowired
     private ImageRepository imageRepository;
 
-    public Result saveImagesById(String parent, MultipartFile[] images) {
+    private String currentPath = "/Users/mac/Desktop/backend/upload/";
 
-        for(int i =0; i < images.length; i++) {
-            Result result = saveImageById(parent, images[i]);
-            if (result.getStatus().equals("fail")) {
-                return result;
-            }
-        }
+    public String imageIdToImagePath(String imageId) {
 
-        return new Result("success");
+        Image image = imageRepository.findByImageId(imageId);
 
+        return  image.getPath();
     }
 
-    public Result saveImageById(String parent, MultipartFile file) {
-
-        Result result = saveImage(file);
-        if (result.getStatus().equals("fail")) {
-            return result;
-        }
-
-        Image image = new Image();
-        image.setParent(parent);
-        image.setPath(result.getDescription());
-        imageRepository.save(image);
-
-        return new Result("success", "save image", image);
-    }
-
-
-    public Result saveImage(MultipartFile file) {
+    public Image saveImage(MultipartFile file, String parentId, String type) {
 
         String target;
         try {
+            // save image to server, return the filename
             String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
             String fileName = UUID.randomUUID() + suffix;
-            target = fileName;
             BufferedOutputStream serverFile = new BufferedOutputStream(
                     new FileOutputStream(
-                            new File("/Users/mac/Desktop/java-spring-rest-api/upload/" + fileName)));
+                            new File(currentPath + fileName)));
 
             serverFile.write(file.getBytes());
             serverFile.flush();
             serverFile.close();
 
+            // save image path to database
+            Image image = new Image();
+            image.setPath(fileName);
+            image.setParentId(parentId);
+            image.setType(type);
+            imageRepository.save(image);
+            return image;
+
         } catch (FileNotFoundException e) {
 
             e.printStackTrace();
-            return new Result("fail", "file not found");
+            return null;
 
         } catch (IOException e) {
 
             e.printStackTrace();
-            return new Result("fail", "IO exception");
+            return null;
 
         }
 
-        return new Result("success", target);
     }
 
-    public Result saveImages(MultipartFile[] files) {
+    public List<Image> saveImages(MultipartFile[] files, String parent, String type) {
 
-        List<String> targets = new ArrayList<String>();
+        List<Image> targets = new ArrayList<>();
 
         for(int i =0 ;i< files.length; i++){
-            Result result = saveImage(files[i]);
-
-            if (result.getStatus().equals("fail")) {
-                return result;
-            }
-
-            targets.add(result.getDescription());
+            Image image = saveImage(files[i], parent, type);
+            targets.add(image);
         }
 
-        return new Result("success", "save all images", targets);
+        return targets;
+    }
+
+    public void deleteImageById(String imageId) {
+
+        Image image = imageRepository.findByImageId(imageId);
+        String path = image.getPath();
+
+        try {
+            File file = new File(currentPath + path);
+            file.delete();
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+
+        imageRepository.deleteByImageId(imageId);
+    }
+
+    public void deleteAllByParentId(String parentId) {
+
+        Iterable<Image> images = imageRepository.findAllByParentId(parentId);
+
+        for (Image image: images) {
+            try {
+                File file = new File(currentPath + image.getPath());
+                file.delete();
+                imageRepository.deleteByImageId(image.getImageId());
+
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }

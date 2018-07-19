@@ -4,6 +4,7 @@ package cloud.common.User;
 import cloud.common.BaseController;
 import cloud.common.FollowRepository;
 import cloud.common.Result;
+import cloud.common.image.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,9 @@ public class UserController extends BaseController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private ImageService imageService;
 
     @Autowired
     private FollowRepository followRepository;
@@ -71,17 +75,11 @@ public class UserController extends BaseController {
     public Result updateAvatar(HttpServletRequest request, @RequestParam("avatar") MultipartFile avatar) {
 
         String userId = request.getParameter("userId");
-        Result result = saveImage(avatar);
+        imageService.saveImage(avatar, null, null);
 
         if (!userRepository.existsById(userId)) {
             return new Result("fail", "user not exist");
         }
-
-        if (result.getStatus().equals("fail")) {
-            return result;
-        }
-
-        userRepository.updateAvatarById(result.getDescription(), userId);
 
         return new Result("success", "update the avatar");
     }
