@@ -1,4 +1,4 @@
-package cloud.module.course.courseComment;
+package cloud.module.course.rating;
 
 
 import lombok.Data;
@@ -11,16 +11,18 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name = "CourseComment")
+@Table(name = "Rating")
 @Data
-public class CourseComment {
+public class Rating {
 
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private String courseCommentId;
+    private String ratingId;
 
     private String courseId;
+
+    private String instructorId;
 
     private Boolean like;
 

@@ -53,6 +53,9 @@ public class InstructorController extends BaseController {
     public Result create(@ModelAttribute Instructor instructor) {
 
         // validation
+        if (instructor.getUserId() == null) {
+            return new Result("fail", "user id cannot be null");
+        }
         if (instructor.getRealName() == null || instructor.getCode() == null) {
             return new Result("fail", "cannot be empty");
         }
@@ -60,6 +63,28 @@ public class InstructorController extends BaseController {
         instructorRepository.save(instructor);
 
         return new Result("success", "create", instructor);
+
+    }
+
+    @PostMapping("/instructor/instructorIdToInstructor")
+    public Result instructorIdToInstructor(HttpServletRequest request) {
+
+        String instructorId = request.getParameter("instructorId");
+
+        Instructor instructor = instructorRepository.findByInstructorId(instructorId);
+
+        return new Result("success", "instructor id to instructor", instructor);
+
+    }
+
+    @PostMapping("/instructor/userIdToInstructor")
+    public Result userIdToInstructor(HttpServletRequest request) {
+
+        String userId = request.getParameter("userId");
+
+        Instructor instructor = instructorRepository.findByInstructorId(userId);
+
+        return new Result("success", "user id to instructor", instructor);
 
     }
 }

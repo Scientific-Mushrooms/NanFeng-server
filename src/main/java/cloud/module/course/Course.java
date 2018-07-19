@@ -24,22 +24,10 @@ public class Course {
 
     private String name;
 
-    private String instructorName;
-
-    private String instructorId;
-
     private String introduction;
 
     private String credit;
 
     private String avatar;
-
-    private Integer ratingNum;
-
-    private Integer likeNum;
-
-    private Integer usefulNum;
-
-    private Integer easyNum;
 
 }
