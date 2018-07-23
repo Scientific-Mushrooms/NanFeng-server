@@ -20,8 +20,12 @@ public class SectionController extends BaseController {
     private SectionRepository sectionRepository;
 
     @PostMapping("/section/all")
-    public Iterable<Section> all(HttpServletRequest request) {
-        return sectionRepository.findAll();
+    public Result all(HttpServletRequest request) {
+
+        Iterable<Section>  sections = sectionRepository.findAll();
+
+        return new Result("success", "all sections", sections);
+
     }
 
     @PostMapping("/section/del")
@@ -32,6 +36,7 @@ public class SectionController extends BaseController {
         sectionRepository.deleteBySectionId(sectionId);
 
         return new Result("success", "delete section");
+
     }
 
     @PostMapping("/section/delAll")
@@ -40,6 +45,7 @@ public class SectionController extends BaseController {
         sectionRepository.deleteAll();
 
         return new Result("success", "delete all");
+
     }
 
     @PostMapping("/section/create")
@@ -50,6 +56,7 @@ public class SectionController extends BaseController {
         sectionRepository.save(section);
 
         return new Result("success", "create section", section);
+
     }
 
     @PostMapping("/section/sectionIdToSection")
@@ -60,6 +67,7 @@ public class SectionController extends BaseController {
         Section section = sectionRepository.findBySectionId(sectionId);
 
         return new Result("success", "section id to section", section);
+
     }
 
 

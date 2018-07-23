@@ -49,6 +49,14 @@ public class ImageService {
         return  image.getPath();
     }
 
+    public Image imageIdToImage(String imageId) {
+
+        Image image = imageRepository.findByImageId(imageId);
+
+        return image;
+
+    }
+
     public Image saveImage(MultipartFile file, String parentId, String type) {
 
         String target;
@@ -131,4 +139,17 @@ public class ImageService {
         }
 
     }
+
+    public void updateParentId(String parentId, String imageId) {
+
+        imageRepository.updateParentByImageId(parentId, imageId);
+
+    }
+
+    public void updateType(String type, String imageId) {
+
+        imageRepository.updateTypeImageId(type, imageId);
+
+    }
+
 }

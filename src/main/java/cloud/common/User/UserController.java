@@ -6,6 +6,7 @@ import cloud.common.Result;
 import cloud.common.image.Image;
 import cloud.common.image.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,7 +41,7 @@ public class UserController extends BaseController {
     }
 
     @PostMapping("/user/create")
-    public Result create(@ModelAttribute User user) {
+    public Result create(@ModelAttribute User user ,HttpServletRequest request) {
 
         // validation
         if (user.getEmail() == null || user.getPassword() == null) {
@@ -51,6 +52,7 @@ public class UserController extends BaseController {
         }
 
         user.setAvatarPath("default_avatar.jpg");
+
         userRepository.save(user);
 
         return new Result("success", "create user", user);
@@ -69,7 +71,27 @@ public class UserController extends BaseController {
 
 
 
+    @PostMapping("/user/update")
+    public Result update(@ModelAttribute User user) {
 
+        String id = user.getUserId();
+
+        if (user.getNickName() != null) {
+            userService.updateNickName(id, user.getNickName());
+        }
+
+        if (user.getEmail() != null) {
+            userService.updateEmail(id, user.getEmail());
+        }
+
+        if (user.getPassword() != null) {
+            userService.updatePassword(id, user.getEmail());
+        }
+
+        User newUser = userService.userIdToUser(id);
+
+        return new Result("success", "update user", newUser);
+    }
 
     @PostMapping("/user/updateAvatar")
     public Result updateAvatar(HttpServletRequest request, @RequestParam("avatar") MultipartFile avatar) {

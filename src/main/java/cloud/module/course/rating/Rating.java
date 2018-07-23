@@ -24,7 +24,7 @@ public class Rating {
 
     private String instructorId;
 
-    private Boolean like;
+//    private Boolean like;
 
     private Boolean easy;
 

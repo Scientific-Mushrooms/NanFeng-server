@@ -28,6 +28,6 @@ public class Course {
 
     private String credit;
 
-    private String avatar;
+    private String avatarId;
 
 }

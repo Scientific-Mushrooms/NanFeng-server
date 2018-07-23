@@ -3,6 +3,7 @@ package cloud.common.image;
 import cloud.common.BaseController;
 import cloud.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,6 +46,18 @@ public class ImageController extends BaseController {
         return new Result("success", "delete by parent id");
     }
 
+    @PostMapping("/image/imageIdToImage")
+    public Result imageIdToImage(HttpServletRequest request) {
+
+        String imageId = request.getParameter("imageId");
+
+        Image image = imageService.imageIdToImage(imageId);
+
+        return new Result("success", "image id to image", image);
+
+    }
+
+
     @PostMapping("/image/saveImage")
     public Result saveImage(HttpServletRequest request, @RequestParam("image") MultipartFile image) {
 
@@ -69,9 +82,10 @@ public class ImageController extends BaseController {
 
     @GetMapping(value = { "/image/{filename:.+}" },
             produces = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_PNG_VALUE })
-    public byte[] getImg(@PathVariable String filename) {
+    public byte[] showImageById(@PathVariable String filename) {
 
         return imageService.showImage(filename);
     }
+
 }
 

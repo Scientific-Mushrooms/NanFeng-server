@@ -29,4 +29,11 @@ public class BaseController {
         return date;
     }
 
+    public String generateUUID() {
+
+        String result = String.valueOf(UUID.randomUUID());
+
+        return result;
+    }
+
 }
