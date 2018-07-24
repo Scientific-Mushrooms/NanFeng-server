@@ -25,12 +25,16 @@ public class CourseController extends BaseController {
 
 
     @PostMapping("/course/all")
-    public Iterable<Course> all(HttpServletRequest request) {
-        return courseRepository.findAll();
+    public Result all() {
+
+        Iterable<Course> courses = courseRepository.findAll();
+
+        return new Result("success", "all courses", courses);
+
     }
 
     @PostMapping("/course/delAll")
-    public Result delAll(HttpServletRequest request) {
+    public Result delAll() {
         courseRepository.deleteAll();
         return new Result("success");
     }
@@ -40,13 +44,14 @@ public class CourseController extends BaseController {
 
         MultipartFile avatar = request.getFile("avatar");
 
-        Image image = imageService.saveImage(avatar, course.getCourseId(), "avatar");
 
-        course.setAvatarId(image.getImageId());
+        if (avatar != null) {
+            Image image = imageService.saveImage(avatar, course.getCourseId(), "avatar");
+            course.setAvatarId(image.getImageId());
+        }
 
         courseRepository.save(course);
 
-        imageService.updateParentId(course.getCourseId(), image.getImageId());
 
         return new Result("success", "create course", course);
 

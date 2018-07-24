@@ -29,7 +29,17 @@ public class ImageController extends BaseController {
     public Result all() {
 
         Iterable<Image> images = imageRepository.findAll();
+
         return new Result("success", "all images", images);
+
+    }
+
+    @PostMapping("/image/delAll")
+    public Result delAll() {
+
+        imageRepository.deleteAll();
+
+        return new Result("success", "delete all images");
     }
 
     @PostMapping("/image/deleteByImageId")
