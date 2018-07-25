@@ -29,7 +29,6 @@ public class ImageService {
     private String currentPath = "/Users/mac/Desktop/backend/upload/";
 
     // for aliyun
-    private String serverPath = "https://mushroom-server.oss-us-west-1.aliyuncs.com/";
     private String endpoint = "http://oss-us-west-1.aliyuncs.com";
     private String accessKeyId = "LTAILFyLtkB3kAKk";
     private String accessKeySecret = "icfVv3qypFczNjWnQYX0kVqiyAb4Zl";
@@ -39,23 +38,25 @@ public class ImageService {
 //     for ubuntu server
 //    private String currentPath = "/home/backend/upload/";
 
-    public byte[] showImage(String fileName) {
+//    public byte[] showImage(String fileName) {
+//
+//        byte[] data = null;
+//        Path path = Paths.get(currentPath + fileName);
+//        try {
+//            data = Files.readAllBytes(path);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return data;
+//    }
+    public void delAll() {
 
-        byte[] data = null;
-        Path path = Paths.get(currentPath + fileName);
-        try {
-            data = Files.readAllBytes(path);
-        } catch (IOException e) {
-            e.printStackTrace();
+        Iterable<Image> images = imageRepository.findAll();
+
+        for (Image image : images) {
+            deleteByImageId(image.getImageId());
         }
-        return data;
-    }
 
-    public String imageIdToImagePath(String imageId) {
-
-        Image image = imageRepository.findByImageId(imageId);
-
-        return  image.getName();
     }
 
     public Image imageIdToImage(String imageId) {
@@ -123,7 +124,7 @@ public class ImageService {
         return targets;
     }
 
-    public void deleteImageByImageId(String imageId) {
+    public void deleteByImageId(String imageId) {
 
         Image image = imageRepository.findByImageId(imageId);
 
@@ -137,11 +138,10 @@ public class ImageService {
             imageRepository.deleteByImageId(image.getImageId());
 
         } catch(Exception e) {
+
             e.printStackTrace();
         }
 
-
-        imageRepository.deleteByImageId(imageId);
     }
 
     public void deleteAllByParentId(String parentId) {
@@ -149,9 +149,9 @@ public class ImageService {
         Iterable<Image> images = imageRepository.findAllByParentId(parentId);
 
         for (Image image: images) {
-            try {
 
-                deleteImageByImageId(image.getImageId());
+            try {
+                deleteByImageId(image.getImageId());
 
             } catch(Exception e) {
                 e.printStackTrace();

@@ -40,7 +40,7 @@ public class UserService {
 
         // delete the image in the server
         if (user.getAvatarId() != null) {
-            imageService.deleteImageByImageId(user.getAvatarId());
+            imageService.deleteByImageId(user.getAvatarId());
         }
 
         // replace the old avatar path and id with new data

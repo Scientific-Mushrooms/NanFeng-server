@@ -38,23 +38,31 @@ public class ImageController extends BaseController {
     @PostMapping("/image/delAll")
     public Result delAll() {
 
-        imageRepository.deleteAll();
+        imageService.delAll();
 
         return new Result("success", "delete all images");
     }
 
     @PostMapping("/image/deleteByImageId")
     public Result del(HttpServletRequest request) {
+
         String imageId = request.getParameter("imageId");
-        imageRepository.deleteByImageId(imageId);
-        return new Result("success", "delete by id");
+
+        imageService.deleteByImageId(imageId);
+
+        return new Result("success", "delete by image id");
+
     }
 
-    @PostMapping("/image/deleteAllByParentId")
+    @PostMapping("/image/deleteByParentId")
     public Result deleteAllByParentId(HttpServletRequest request) {
+
         String parentId = request.getParameter("parentId");
+
         imageService.deleteAllByParentId(parentId);
+
         return new Result("success", "delete by parent id");
+
     }
 
     @PostMapping("/image/imageIdToImage")
@@ -67,7 +75,6 @@ public class ImageController extends BaseController {
         return new Result("success", "image id to image", image);
 
     }
-
 
     @PostMapping("/image/saveImage")
     public Result saveImage(HttpServletRequest request, @RequestParam("image") MultipartFile image) {
@@ -93,12 +100,12 @@ public class ImageController extends BaseController {
         return new Result("success", "save images", files);
     }
 
-    @GetMapping(value = { "/image/{filename:.+}" },
-            produces = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_PNG_VALUE })
-    public byte[] showImageById(@PathVariable String filename) {
-
-        return imageService.showImage(filename);
-    }
+//    @GetMapping(value = { "/image/{filename:.+}" },
+//            produces = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_PNG_VALUE })
+//    public byte[] showImageById(@PathVariable String filename) {
+//
+//        return imageService.showImage(filename);
+//    }
 
 }
 
