@@ -29,7 +29,4 @@ public class Instructor {
 
     private String office;
 
-    private Integer totalRatingNum;
-
-
 }

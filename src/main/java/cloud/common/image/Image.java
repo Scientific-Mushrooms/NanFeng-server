@@ -23,5 +23,5 @@ public class Image {
 
     private String parentId;
 
-    private String path;
+    private String name;
 }

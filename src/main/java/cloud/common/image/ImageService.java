@@ -4,6 +4,7 @@ package cloud.common.image;
 import cloud.common.image.ImageRepository;
 import cloud.common.Result;
 import cloud.common.image.Image;
+import com.aliyun.oss.OSSClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,14 @@ public class ImageService {
 //     for mac
     private String currentPath = "/Users/mac/Desktop/backend/upload/";
 
+    // for aliyun
+    private String serverPath = "https://mushroom-server.oss-us-west-1.aliyuncs.com/";
+    private String endpoint = "http://oss-us-west-1.aliyuncs.com";
+    private String accessKeyId = "LTAILFyLtkB3kAKk";
+    private String accessKeySecret = "icfVv3qypFczNjWnQYX0kVqiyAb4Zl";
+    private String bucketName = "mushroom-server";
+
+
 //     for ubuntu server
 //    private String currentPath = "/home/backend/upload/";
 
@@ -46,7 +55,7 @@ public class ImageService {
 
         Image image = imageRepository.findByImageId(imageId);
 
-        return  image.getPath();
+        return  image.getName();
     }
 
     public Image imageIdToImage(String imageId) {
@@ -64,17 +73,25 @@ public class ImageService {
             // save image to server, return the filename
             String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
             String fileName = UUID.randomUUID() + suffix;
-            BufferedOutputStream serverFile = new BufferedOutputStream(
-                    new FileOutputStream(
-                            new File(currentPath + fileName)));
 
-            serverFile.write(file.getBytes());
-            serverFile.flush();
-            serverFile.close();
+//            BufferedOutputStream serverFile = new BufferedOutputStream(
+//                    new FileOutputStream(
+//                            new File(currentPath + fileName)));
+//
+//            serverFile.write(file.getBytes());
+//            serverFile.flush();
+//            serverFile.close();
+
+            OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
+
+            ossClient.putObject(bucketName, fileName, new ByteArrayInputStream(file.getBytes()));
+
+            ossClient.shutdown();
+
 
             // save image path to database
             Image image = new Image();
-            image.setPath(fileName);
+            image.setName(fileName);
             image.setParentId(parentId);
             image.setType(type);
             imageRepository.save(image);
@@ -106,14 +123,18 @@ public class ImageService {
         return targets;
     }
 
-    public void deleteImageById(String imageId) {
+    public void deleteImageByImageId(String imageId) {
 
         Image image = imageRepository.findByImageId(imageId);
-        String path = image.getPath();
 
         try {
-            File file = new File(currentPath + path);
-            file.delete();
+
+            String objectName = image.getName();
+            OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
+            ossClient.deleteObject(bucketName, objectName);
+            ossClient.shutdown();
+
+            imageRepository.deleteByImageId(image.getImageId());
 
         } catch(Exception e) {
             e.printStackTrace();
@@ -129,9 +150,8 @@ public class ImageService {
 
         for (Image image: images) {
             try {
-                File file = new File(currentPath + image.getPath());
-                file.delete();
-                imageRepository.deleteByImageId(image.getImageId());
+
+                deleteImageByImageId(image.getImageId());
 
             } catch(Exception e) {
                 e.printStackTrace();

@@ -2,6 +2,7 @@ package cloud.common.image;
 
 import cloud.common.BaseController;
 import cloud.common.Result;
+import com.aliyun.oss.OSSClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
@@ -75,6 +76,8 @@ public class ImageController extends BaseController {
         String type = request.getParameter("type");
 
         Image file = imageService.saveImage(image, parent, type);
+
+
 
         return new Result("success", "save one image", file);
     }

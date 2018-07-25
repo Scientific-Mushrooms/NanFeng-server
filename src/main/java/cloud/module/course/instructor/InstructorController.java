@@ -5,19 +5,18 @@ import cloud.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 
+@RestController
 public class InstructorController extends BaseController {
 
 
     @Autowired
     private InstructorRepository instructorRepository;
-
-    @Resource
-    private InstructorService instructorService;
 
 
     @PostMapping("/instructor/all")
@@ -82,7 +81,8 @@ public class InstructorController extends BaseController {
 
         String userId = request.getParameter("userId");
 
-        Instructor instructor = instructorRepository.findByInstructorId(userId);
+        System.out.println(userId);
+        Instructor instructor = instructorRepository.findByUserId(userId);
 
         return new Result("success", "user id to instructor", instructor);
 
