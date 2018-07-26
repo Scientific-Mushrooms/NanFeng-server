@@ -45,7 +45,6 @@ public class UserService {
 
         // replace the old avatar path and id with new data
         userRepository.updateAvatarIdByUserId(image.getImageId(), userId);
-        userRepository.updateAvatarPathByUserId(image.getName(), userId);
 
     }
 

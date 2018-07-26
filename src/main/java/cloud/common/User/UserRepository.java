@@ -19,12 +19,6 @@ public interface UserRepository extends CrudRepository<User, String> {
 
     User findByUserId(String id);
 
-
-    @Modifying
-    @Query("update User u set u.avatarPath = ?1 where u.userId = ?2")
-    @Transactional
-    void updateAvatarPathByUserId(String avatarPath, String userId);
-
     @Modifying
     @Query("update User u set u.avatarId = ?1 where u.userId = ?2")
     @Transactional

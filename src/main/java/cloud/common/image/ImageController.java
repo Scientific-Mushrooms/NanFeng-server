@@ -8,6 +8,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -98,6 +99,21 @@ public class ImageController extends BaseController {
         Iterable<Image> files = imageService.saveImages(images, parent, type);
 
         return new Result("success", "save images", files);
+    }
+
+    @GetMapping(value = { "/image/{imageId:.+}" })
+    public RedirectView showImage(@PathVariable String imageId) {
+
+        Image image = imageService.imageIdToImage(imageId);
+
+        String name = image.getName();
+
+        RedirectView redirectView = new RedirectView();
+
+        redirectView.setUrl(imagePath + name);
+
+        return redirectView;
+
     }
 
 //    @GetMapping(value = { "/image/{filename:.+}" },

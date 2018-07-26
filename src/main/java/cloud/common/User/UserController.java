@@ -47,11 +47,12 @@ public class UserController extends BaseController {
         if (user.getEmail() == null || user.getPassword() == null) {
             return new Result("fail", "can not be empty");
         }
+
         if (userRepository.existsByEmail(user.getEmail())) {
             return new Result("fail", "duplicate email");
         }
 
-        user.setAvatarPath("default_avatar.jpg");
+        user.setAvatarId("e5bbf508-a037-4a0f-8f4f-1ead05555eef");
 
         userRepository.save(user);
 
