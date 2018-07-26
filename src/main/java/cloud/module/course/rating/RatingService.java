@@ -15,5 +15,12 @@ public class RatingService {
     private RatingRepository ratingRepository;
 
 
+    public Rating ratingIdToRating(String ratingId) {
+
+        Rating rating = ratingRepository.findByRatingId(ratingId);
+
+        return rating;
+    }
+
 
 }

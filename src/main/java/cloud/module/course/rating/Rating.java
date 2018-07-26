@@ -20,17 +20,18 @@ public class Rating {
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String ratingId;
 
+    private String userId;
+
     private String courseId;
 
-    private String instructorId;
-
-//    private Boolean like;
+    private Boolean enjoy;
 
     private Boolean easy;
 
     private Boolean useful;
 
-    private String content;
+    private String comment;
 
-    private Date createTime;
+    private Date date;
+
 }

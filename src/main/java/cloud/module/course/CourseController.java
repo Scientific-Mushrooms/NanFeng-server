@@ -35,15 +35,17 @@ public class CourseController extends BaseController {
 
     @PostMapping("/course/delAll")
     public Result delAll() {
+
         courseRepository.deleteAll();
+
         return new Result("success");
+
     }
 
     @PostMapping("/course/create")
     public Result create(@ModelAttribute Course course, MultipartHttpServletRequest request) {
 
         MultipartFile avatar = request.getFile("avatar");
-
 
         if (avatar != null) {
             Image image = imageService.saveImage(avatar, course.getCourseId(), "avatar");

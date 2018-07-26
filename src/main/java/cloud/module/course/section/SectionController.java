@@ -3,7 +3,6 @@ package cloud.module.course.section;
 
 import cloud.common.BaseController;
 import cloud.common.Result;
-import cloud.module.course.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,14 +27,25 @@ public class SectionController extends BaseController {
 
     }
 
-    @PostMapping("/section/del")
-    public Result del(HttpServletRequest request) {
+    @PostMapping("/section/deleteBySectionId")
+    public Result deleteBySectionId(HttpServletRequest request) {
 
         String sectionId = request.getParameter("sectionId");
 
         sectionRepository.deleteBySectionId(sectionId);
 
-        return new Result("success", "delete section");
+        return new Result("success", "delete by section id");
+
+    }
+
+    @PostMapping("/section/deleteAllByCourseId")
+    public Result deleteByCourseId(HttpServletRequest request) {
+
+        String courseId = request.getParameter("courseId");
+
+        sectionRepository.deleteAllByCourseId(courseId);
+
+        return new Result("success", "delete all sections by course id");
 
     }
 
@@ -48,17 +58,6 @@ public class SectionController extends BaseController {
 
     }
 
-    @PostMapping("/section/create")
-    public Result create(@ModelAttribute Section section) {
-
-        section.setEnrolledStudentNum(0);
-
-        sectionRepository.save(section);
-
-        return new Result("success", "create section", section);
-
-    }
-
     @PostMapping("/section/sectionIdToSection")
     public Result sectionIdToSection(HttpServletRequest request) {
 
@@ -67,6 +66,28 @@ public class SectionController extends BaseController {
         Section section = sectionRepository.findBySectionId(sectionId);
 
         return new Result("success", "section id to section", section);
+
+    }
+
+    @PostMapping("/section/courseIdToSections")
+    public Result courseIdToSections(HttpServletRequest request) {
+
+        String courseId = request.getParameter("courseId");
+
+        Iterable<Section> sections = sectionRepository.findAllByCourseId(courseId);
+
+        return new Result("success", "section id to section", sections);
+
+    }
+
+    @PostMapping("/section/create")
+    public Result create(@ModelAttribute Section section) {
+
+        section.setEnrolledStudentNum(0);
+
+        sectionRepository.save(section);
+
+        return new Result("success", "create section", section);
 
     }
 

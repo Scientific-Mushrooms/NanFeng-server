@@ -19,15 +19,11 @@ public class Section {
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String sectionId;
 
-    private String sectionCode;
-
     private String courseId;
-
-    private String courseName;
 
     private String instructorId;
 
-    private String instructorName;
+    private String code;
 
     private Integer enrolledStudentNum;
 

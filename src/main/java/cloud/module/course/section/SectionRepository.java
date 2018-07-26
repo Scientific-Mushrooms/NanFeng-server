@@ -10,4 +10,10 @@ public interface SectionRepository extends CrudRepository<Section, String> {
 
     @Transactional
     void deleteBySectionId(String sectionId);
+
+    @Transactional
+    void deleteAllByCourseId(String courseId);
+
+    Iterable<Section> findAllByCourseId(String courseId);
+
 }
