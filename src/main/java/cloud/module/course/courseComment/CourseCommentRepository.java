@@ -1,12 +1,12 @@
-package cloud.module.course.rating;
+package cloud.module.course.courseComment;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface RatingRepository extends CrudRepository<Rating, String> {
+public interface CourseCommentRepository extends CrudRepository<CourseComment, String> {
 
 
-    Rating findByRatingId(String ratingId);
+    CourseComment findByCourseCommentId(String ratingId);
 
     @Transactional
     void deleteByUserId(String userId);
@@ -14,7 +14,7 @@ public interface RatingRepository extends CrudRepository<Rating, String> {
     @Transactional
     void deleteByCourseId(String courseId);
 
-    Iterable<Rating> findAllByCourseId(String courseId);
+    Iterable<CourseComment> findAllByCourseId(String courseId);
 
 
 }

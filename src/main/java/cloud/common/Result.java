@@ -21,10 +21,19 @@ public class Result {
         this.detail = obj;
     }
 
+    public Result(String status, String description, Object obj, Object obj2) {
+        this.status = status;
+        this.description = description;
+        this.detail = obj;
+        this.more = obj2;
+    }
+
     String status;
 
     String description;
 
     Object detail;
+
+    Object more;
 
 }

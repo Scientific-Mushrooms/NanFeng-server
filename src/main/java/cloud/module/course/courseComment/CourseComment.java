@@ -1,6 +1,7 @@
-package cloud.module.course.rating;
+package cloud.module.course.courseComment;
 
 
+import cloud.common.User.User;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -11,14 +12,14 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name = "Rating")
+@Table(name = "CourseComment")
 @Data
-public class Rating {
+public class CourseComment {
 
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private String ratingId;
+    private String courseCommentId;
 
     private String userId;
 
