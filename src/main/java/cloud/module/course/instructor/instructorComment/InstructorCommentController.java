@@ -1,6 +1,7 @@
 package cloud.module.course.instructor.instructorComment;
 
 
+import cloud.common.BaseController;
 import cloud.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,7 +11,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-public class InstructorCommentController {
+public class InstructorCommentController extends BaseController {
 
 
     @Autowired
