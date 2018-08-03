@@ -34,10 +34,21 @@ public class UserController extends BaseController {
         return userRepository.findAll();
     }
 
-    @PostMapping("/user/delAll")
+    @PostMapping("/user/deleteAll")
     public Result deleteAll(HttpServletRequest request) {
         userRepository.deleteAll();
-        return new Result("success");
+        return new Result("success", "delete all users");
+    }
+
+    @PostMapping("/user/userIdToUser")
+    public Result userIdToUser(HttpServletRequest request) {
+
+        String userId = request.getParameter("userId");
+
+        User user = userService.userIdToUser(userId);
+
+        return new Result("success", "user id to user", user);
+
     }
 
     @PostMapping("/user/create")
