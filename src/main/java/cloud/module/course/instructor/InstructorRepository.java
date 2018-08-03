@@ -14,4 +14,5 @@ public interface InstructorRepository extends CrudRepository<Instructor, String>
     void deleteByInstructorId(String instructorId);
 
 
+    Instructor findByRealName(String realName);
 }

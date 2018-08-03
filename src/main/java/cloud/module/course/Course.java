@@ -20,18 +20,44 @@ public class Course {
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String courseId;
 
+    // 课程编号
     private String code;
 
+    //课程名称
     private String name;
 
+    // 性质
     private String type;
 
+    // 校区
+    private String campus;
+
+    // 开课院系
     private String faculty;
 
-    private String introduction;
-
+    // 学分
     private String credit;
 
+    // 学时
+    private String period;
+
+    // 头像
     private String avatarId;
+
+    // 建议教材
+    private String resource;
+
+    // 参考资料
+    private String reference;
+
+    // 教学目标
+    private String target;
+
+    // 教学内容
+    private String content;
+
+    // 其他要求
+    private String other;
+
 
 }

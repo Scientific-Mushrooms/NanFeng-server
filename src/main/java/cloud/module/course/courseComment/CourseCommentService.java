@@ -22,5 +22,17 @@ public class CourseCommentService {
         return courseComment;
     }
 
+    public Iterable<CourseComment> courseIdToCourseComments(String courseId) {
 
+        Iterable<CourseComment> courseComments = courseCommentRepository.findAllByCourseId(courseId);
+
+        return courseComments;
+
+    }
+
+    public void deleteAllByCourseId(String courseId) {
+
+        courseCommentRepository.deleteAllByCourseId(courseId);
+
+    }
 }

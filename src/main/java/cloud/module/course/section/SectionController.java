@@ -3,11 +3,14 @@ package cloud.module.course.section;
 
 import cloud.common.BaseController;
 import cloud.common.Result;
+import cloud.module.course.instructor.Instructor;
+import cloud.module.course.instructor.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -17,6 +20,9 @@ public class SectionController extends BaseController {
 
     @Autowired
     private SectionRepository sectionRepository;
+
+    @Resource
+    private InstructorService instructorService;
 
     @PostMapping("/section/all")
     public Result all(HttpServletRequest request) {
@@ -84,6 +90,24 @@ public class SectionController extends BaseController {
     public Result create(@ModelAttribute Section section) {
 
         section.setEnrolledStudentNum(0);
+
+        sectionRepository.save(section);
+
+        return new Result("success", "create section", section);
+
+    }
+    @PostMapping("/section/import")
+    public Result importData(@ModelAttribute Section section, HttpServletRequest request) {
+
+        String realName = request.getParameter("realName");
+
+        Instructor instructor = instructorService.realNameToInstructor(realName);
+
+        if (instructor == null) {
+            instructor = instructorService.save(realName);
+        }
+
+        section.setInstructorId(instructor.getInstructorId());
 
         sectionRepository.save(section);
 

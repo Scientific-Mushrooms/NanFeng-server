@@ -62,7 +62,7 @@ public class CourseCommentController extends BaseController {
 
         String courseId = request.getParameter("courseId");
 
-        courseCommentRepository.deleteByCourseId(courseId);
+        courseCommentRepository.deleteAllByCourseId(courseId);
 
         return new Result("success", "delete all course comments by course id");
 

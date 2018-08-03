@@ -14,4 +14,7 @@ public interface CourseRepository extends CrudRepository<Course, String> {
     @Transactional
     void deleteByCourseId(String courseId);
 
+    Iterable<Course> findByNameLike(String name);
+
+    boolean existsByCode(String code);
 }

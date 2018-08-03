@@ -11,10 +11,8 @@ public interface CourseCommentRepository extends CrudRepository<CourseComment, S
     @Transactional
     void deleteByUserId(String userId);
 
-    @Transactional
-    void deleteByCourseId(String courseId);
-
     Iterable<CourseComment> findAllByCourseId(String courseId);
 
-
+    @Transactional
+    void deleteAllByCourseId(String courseId);
 }

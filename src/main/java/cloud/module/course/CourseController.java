@@ -5,6 +5,10 @@ import cloud.common.BaseController;
 import cloud.common.Result;
 import cloud.common.image.Image;
 import cloud.common.image.ImageService;
+import cloud.module.course.courseComment.CourseComment;
+import cloud.module.course.courseComment.CourseCommentService;
+import cloud.module.course.instructor.Instructor;
+import cloud.module.course.instructor.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +27,15 @@ public class CourseController extends BaseController {
     @Resource
     private ImageService imageService;
 
+    @Resource
+    private CourseCommentService courseCommentService;
+
+    @Resource
+    private InstructorService instructorService;
+
+    @Resource
+    private CourseService courseService;
+
 
     @PostMapping("/course/all")
     public Result all() {
@@ -33,12 +46,16 @@ public class CourseController extends BaseController {
 
     }
 
-    @PostMapping("/course/delAll")
+    @PostMapping("/course/deleteAll")
     public Result delAll() {
 
-        courseRepository.deleteAll();
+        Iterable<Course> courses = courseRepository.findAll();
 
-        return new Result("success");
+        for (Course course : courses) {
+            courseService.deleteByCourseId(course.getCourseId());
+        }
+
+        return new Result("success", "delete all courses");
 
     }
 
@@ -52,6 +69,10 @@ public class CourseController extends BaseController {
             course.setAvatarId(image.getImageId());
         }
 
+        if (courseRepository.existsByCode(course.getCode())) {
+            return new Result("error", "duplicate course code");
+        }
+
         courseRepository.save(course);
 
 
@@ -59,13 +80,15 @@ public class CourseController extends BaseController {
 
     }
 
-    @PostMapping("/course/del")
-    public Result del(HttpServletRequest request) {
+    @PostMapping("/course/deleteByCourseId")
+    public Result deleteByCourseId(HttpServletRequest request) {
 
         String courseId = request.getParameter("courseId");
 
-        courseRepository.deleteByCourseId(courseId);
+        courseService.deleteByCourseId(courseId);
+
         return new Result("success", "delete course");
+
     }
 
     @PostMapping("/course/courseIdToCourse")
@@ -75,7 +98,24 @@ public class CourseController extends BaseController {
 
         Course course = courseRepository.findByCourseId(courseId);
 
-        return new Result("success", "create course", course);
+        Iterable<CourseComment> courseComments = courseCommentService.courseIdToCourseComments(courseId);
+
+        return new Result("success", "create course", course, courseComments);
+
     }
+
+    @PostMapping("/course/searchByName")
+    public Result searchByName(HttpServletRequest request) {
+
+        String name = request.getParameter("name");
+
+        String newName = "%" + name + "%";
+
+        Iterable<Course> courses = courseRepository.findByNameLike(newName);
+
+        return new Result("success", "search", courses);
+
+    }
+
 
 }

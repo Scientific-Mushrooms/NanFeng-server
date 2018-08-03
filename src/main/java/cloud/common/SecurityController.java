@@ -5,6 +5,8 @@ import cloud.common.User.UserRepository;
 import cloud.common.User.UserService;
 import cloud.common.Result;
 import cloud.common.User.User;
+import cloud.module.course.instructor.Instructor;
+import cloud.module.course.instructor.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +25,10 @@ public class SecurityController extends BaseController {
     @Resource
     private UserService userService;
 
-    @PostMapping("/security/login")
+    @Resource
+    private InstructorService instructorService;
+
+    @PostMapping("/security/signIn")
     public Result login(HttpServletRequest request) {
 
         String email = request.getParameter("email");
@@ -39,7 +44,9 @@ public class SecurityController extends BaseController {
             return new Result("fail", "wrong password");
         }
 
-        return new Result("success", "good", user);
+        Instructor instructor = instructorService.userIdToInstructor(user.getUserId());
+
+        return new Result("success", "sign in", user, instructor);
     }
 
     @PostMapping("/security/signup")
