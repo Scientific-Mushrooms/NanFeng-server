@@ -18,6 +18,9 @@ public class InstructorController extends BaseController {
     @Autowired
     private InstructorRepository instructorRepository;
 
+    @Resource
+    private InstructorService instructorService;
+
 
     @PostMapping("/instructor/all")
     public Result all(HttpServletRequest request) {
@@ -28,8 +31,8 @@ public class InstructorController extends BaseController {
 
     }
 
-    @PostMapping("/instructor/delAll")
-    public Result delAll(HttpServletRequest request) {
+    @PostMapping("/instructor/deleteAll")
+    public Result deleteAll(HttpServletRequest request) {
 
         instructorRepository.deleteAll();
 
@@ -42,7 +45,7 @@ public class InstructorController extends BaseController {
 
         String instructorId = request.getParameter("instructorId");
 
-        instructorRepository.deleteByInstructorId(instructorId);
+        instructorService.deleteByInstructorId(instructorId);
 
         return new Result("success", "delete instructor by id");
 

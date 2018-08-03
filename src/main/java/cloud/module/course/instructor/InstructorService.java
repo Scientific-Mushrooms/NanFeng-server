@@ -1,8 +1,11 @@
 package cloud.module.course.instructor;
 
+import cloud.module.course.instructor.instructorComment.InstructorCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
 
 
 @Transactional
@@ -13,6 +16,17 @@ public class InstructorService {
     @Autowired
     private InstructorRepository instructorRepository;
 
+    @Resource
+    private InstructorCommentService instructorCommentService;
+
+
+    public void deleteByInstructorId(String instructorId) {
+
+        instructorRepository.deleteByInstructorId(instructorId);
+
+        instructorCommentService.deleteAllByInstructorId(instructorId);
+
+    }
 
     public Instructor userIdToInstructor(String userId) {
 
