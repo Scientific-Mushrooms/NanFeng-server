@@ -70,17 +70,16 @@ public class UserController extends BaseController {
         return new Result("success", "create user", user);
     }
 
-    @PostMapping("/user/del")
-    public Result del(HttpServletRequest request) {
+    @PostMapping("/user/deleteByUserId")
+    public Result deleteByUserId(HttpServletRequest request) {
 
         String userId = request.getParameter("userId");
 
         userRepository.deleteByUserId(userId);
 
-        return new Result("success");
+        return new Result("success", "delete by user id");
+
     }
-
-
 
 
     @PostMapping("/user/update")
