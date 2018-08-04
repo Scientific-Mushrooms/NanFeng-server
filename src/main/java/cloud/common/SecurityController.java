@@ -1,12 +1,10 @@
 package cloud.common;
 
-import cloud.common.BaseController;
 import cloud.common.User.UserRepository;
 import cloud.common.User.UserService;
-import cloud.common.Result;
 import cloud.common.User.User;
-import cloud.module.course.instructor.Instructor;
-import cloud.module.course.instructor.InstructorService;
+import cloud.module.instructor.Instructor;
+import cloud.module.instructor.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

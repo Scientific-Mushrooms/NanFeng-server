@@ -1,6 +1,6 @@
-package cloud.module.course.instructor;
+package cloud.module.instructor;
 
-import cloud.module.course.instructor.instructorComment.InstructorCommentService;
+import cloud.module.instructor.instructorComment.InstructorCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

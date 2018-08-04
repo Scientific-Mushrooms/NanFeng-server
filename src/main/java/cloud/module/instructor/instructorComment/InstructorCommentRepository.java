@@ -1,4 +1,4 @@
-package cloud.module.course.instructor.instructorComment;
+package cloud.module.instructor.instructorComment;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;

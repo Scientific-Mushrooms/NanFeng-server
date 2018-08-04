@@ -1,4 +1,4 @@
-package cloud.module.course.instructor;
+package cloud.module.instructor;
 
 import cloud.common.BaseController;
 import cloud.common.Result;
