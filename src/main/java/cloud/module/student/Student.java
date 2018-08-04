@@ -20,6 +20,8 @@ public class Student {
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String studentId;
 
+    private String userId;
+
     private String studentCode;
 
     private String realName;
