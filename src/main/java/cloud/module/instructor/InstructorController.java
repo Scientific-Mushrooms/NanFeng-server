@@ -97,23 +97,23 @@ public class InstructorController extends BaseController {
         String realName = request.getParameter("realName");
         String code = request.getParameter("code");
 
-        Instructor oldInstructor = instructorService.instructorIdToInstructor(instructorId);
+        Instructor instructor = instructorService.instructorIdToInstructor(instructorId);
 
-        if (oldInstructor == null) {
+        if (instructor == null) {
             return new Result("fail", "instructor not exist");
         }
 
         if (realName != null && !realName.equals("")) {
+            instructor.setRealName(realName);
             instructorRepository.updateRealNameByInstructorId(realName, instructorId);
         }
 
-        if (code != null && realName.equals("")) {
+        if (code != null && !code.equals("")) {
+            instructor.setCode(code);
             instructorRepository.updateCodeByInstructorId(code, instructorId);
         }
 
-        Instructor newInstructor = instructorService.instructorIdToInstructor(instructorId);
-
-        return new Result("success", "update instructor", newInstructor);
+        return new Result("success", "update instructor", instructor);
 
     }
 }

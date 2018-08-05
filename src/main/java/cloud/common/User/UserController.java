@@ -5,6 +5,10 @@ import cloud.common.BaseController;
 import cloud.common.Result;
 import cloud.common.image.Image;
 import cloud.common.image.ImageService;
+import cloud.module.instructor.Instructor;
+import cloud.module.instructor.InstructorService;
+import cloud.module.student.Student;
+import cloud.module.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,6 +33,13 @@ public class UserController extends BaseController {
     @Resource
     private ImageService imageService;
 
+    @Resource
+    private InstructorService instructorService;
+
+    @Resource
+    private StudentService studentService;
+
+
     @PostMapping("/user/all")
     public Iterable<User> all(HttpServletRequest request) {
         return userRepository.findAll();
@@ -46,8 +57,10 @@ public class UserController extends BaseController {
         String userId = request.getParameter("userId");
 
         User user = userService.userIdToUser(userId);
+        Instructor instructor = instructorService.userIdToInstructor(user.getUserId());
+        Student student = studentService.userIdToStudent(user.getUserId());
 
-        return new Result("success", "user id to user", user);
+        return new Result("success", "user id to user", user, instructor, student);
 
     }
 

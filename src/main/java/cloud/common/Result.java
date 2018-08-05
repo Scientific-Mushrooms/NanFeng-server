@@ -28,6 +28,14 @@ public class Result {
         this.more = obj2;
     }
 
+    public Result(String status, String description, Object obj, Object obj2, Object obj3) {
+        this.status = status;
+        this.description = description;
+        this.detail = obj;
+        this.more = obj2;
+        this.extra = obj3;
+    }
+
     String status;
 
     String description;
@@ -35,5 +43,7 @@ public class Result {
     Object detail;
 
     Object more;
+
+    Object extra;
 
 }
