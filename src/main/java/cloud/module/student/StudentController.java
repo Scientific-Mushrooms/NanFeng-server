@@ -45,15 +45,11 @@ public class StudentController extends BaseController {
     public Result create(@ModelAttribute Student student) {
 
         if (student.getRealName() == null) {
-
             return new Result("fail", "real name cannot be empty");
-
         }
 
-        if (student.getStudentCode() == null) {
-
+        if (student.getCode() == null) {
             return new Result("fail", "student code cannot be empty");
-
         }
 
         studentRepository.save(student);
@@ -84,4 +80,30 @@ public class StudentController extends BaseController {
 
     }
 
+    @PostMapping("/student/updateByStudentId")
+    public Result updateByStudentId(HttpServletRequest request) {
+
+        String studentId = request.getParameter("studentId");
+        String code = request.getParameter("code");
+        String realName = request.getParameter("realName");
+
+        Student oldStudent = studentService.studentIdToStudent(studentId);
+
+        if (oldStudent == null) {
+            return new Result("fail", "student not exist");
+        }
+
+        if (code != null && !code.equals("")) {
+            studentRepository.updateCodeByStudentId(code, studentId);
+        }
+
+        if (realName != null && !realName.equals("")) {
+            studentRepository.updateRealNameByStudentId(realName, studentId);
+        }
+
+        Student newStudent = studentService.studentIdToStudent(studentId);
+
+        return new Result("success", "update student", newStudent);
+
+    }
 }

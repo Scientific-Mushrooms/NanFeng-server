@@ -40,7 +40,7 @@ public class InstructorController extends BaseController {
 
     }
 
-    @PostMapping("/instructor/del")
+    @PostMapping("/instructor/deleteByInstructorId")
     public Result del(HttpServletRequest request) {
 
         String instructorId = request.getParameter("instructorId");
@@ -84,10 +84,36 @@ public class InstructorController extends BaseController {
 
         String userId = request.getParameter("userId");
 
-        System.out.println(userId);
         Instructor instructor = instructorRepository.findByUserId(userId);
 
         return new Result("success", "user id to instructor", instructor);
+
+    }
+
+    @PostMapping("/instructor/updateByInstructorId")
+    public Result updateByInstructorId(HttpServletRequest request) {
+
+        String instructorId = request.getParameter("instructorId");
+        String realName = request.getParameter("realName");
+        String code = request.getParameter("code");
+
+        Instructor oldInstructor = instructorService.instructorIdToInstructor(instructorId);
+
+        if (oldInstructor == null) {
+            return new Result("fail", "instructor not exist");
+        }
+
+        if (realName != null && !realName.equals("")) {
+            instructorRepository.updateRealNameByInstructorId(realName, instructorId);
+        }
+
+        if (code != null && realName.equals("")) {
+            instructorRepository.updateCodeByInstructorId(code, instructorId);
+        }
+
+        Instructor newInstructor = instructorService.instructorIdToInstructor(instructorId);
+
+        return new Result("success", "update instructor", newInstructor);
 
     }
 }

@@ -1,5 +1,6 @@
 package cloud.module.course;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -10,6 +11,8 @@ import java.util.Date;
 public interface CourseRepository extends CrudRepository<Course, String> {
 
     Course findByCourseId(String courseId);
+
+    Iterable<Course> findTop10ByOrderByName();
 
     @Transactional
     void deleteByCourseId(String courseId);

@@ -22,7 +22,7 @@ public class Student {
 
     private String userId;
 
-    private String studentCode;
+    private String code;
 
     private String realName;
 

@@ -103,10 +103,20 @@ public class CourseController extends BaseController {
 
     }
 
-    @PostMapping("/course/searchByName")
+    @PostMapping("/course/search")
     public Result searchByName(HttpServletRequest request) {
 
         String name = request.getParameter("name");
+
+        if (name == null || name.equals("")) {
+
+            System.out.println(name);
+
+            Iterable<Course> courses = courseRepository.findTop10ByOrderByName();
+
+            return new Result("success", "find top 10", courses);
+
+        }
 
         String newName = "%" + name + "%";
 
