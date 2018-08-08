@@ -21,6 +21,14 @@ public class ClassroomService {
 
     }
 
+    public Iterable<Classroom> instructorIdToAllClassrooms(String instructorId) {
+
+        Iterable<Classroom> classrooms = classroomRepository.findAllByInstructorId(instructorId);
+
+        return classrooms;
+
+    }
+
     public void deleteByClassroomId(String classroomId) {
 
         classroomRepository.deleteByClassroomId(classroomId);

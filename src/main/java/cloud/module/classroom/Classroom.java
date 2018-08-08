@@ -22,6 +22,8 @@ public class Classroom {
 
     private String instructorId;
 
+    private String avatarId;
+
     private String name;
 
     private String code;

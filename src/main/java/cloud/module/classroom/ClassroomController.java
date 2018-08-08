@@ -3,10 +3,16 @@ package cloud.module.classroom;
 
 import cloud.common.BaseController;
 import cloud.common.Result;
+import cloud.common.image.Image;
+import cloud.common.image.ImageService;
+import cloud.module.instructor.Instructor;
+import cloud.module.instructor.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +27,12 @@ public class ClassroomController extends BaseController {
 
     @Resource
     private ClassroomService classroomService;
+
+    @Resource
+    private ImageService imageService;
+
+    @Resource
+    private InstructorService instructorService;
 
 
     @PostMapping("/classroom/all")
@@ -73,13 +85,34 @@ public class ClassroomController extends BaseController {
 
     }
 
+    @PostMapping("/classroom/instructorIdToAllClassrooms")
+    public Result instructorIdToAllClassrooms(HttpServletRequest request) {
+
+        String instructorId = request.getParameter("instructorId");
+
+        if (instructorId == null || instructorId.equals("")) {
+            return new Result("fail", "instructor id cannot be empty");
+        }
+
+        Iterable<Classroom> classrooms = classroomService.instructorIdToAllClassrooms(instructorId);
+
+        return new Result("success", "instructor to all classrooms", classrooms);
+
+    }
+
     @PostMapping("/classroom/create")
-    public Result create(@ModelAttribute Classroom classroom) {
+    public Result create(@ModelAttribute Classroom classroom, @RequestParam("avatar") MultipartFile avatar) {
 
-        if (classroom.getInstructorId() == null) {
+        String instructorId = classroom.getInstructorId();
+        Instructor instructor = instructorService.instructorIdToInstructor(instructorId);
 
+        if (instructorId == null || instructorId.equals("") || instructor == null) {
             return new Result("fail", "instructor can not be empty");
+        }
 
+        if (avatar != null) {
+            Image image = imageService.saveImage(avatar, classroom.getClassroomId(), "avatar");
+            classroom.setAvatarId(image.getImageId());
         }
 
         classroom.setDate(new Date());

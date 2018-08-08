@@ -14,4 +14,7 @@ public interface ClassroomRepository extends CrudRepository<Classroom, String> {
 
     @Transactional
     void deleteAllByInstructorId(String instructorId);
+
+    Iterable<Classroom> findAllByInstructorId(String instructorId);
+
 }

@@ -87,23 +87,23 @@ public class StudentController extends BaseController {
         String code = request.getParameter("code");
         String realName = request.getParameter("realName");
 
-        Student oldStudent = studentService.studentIdToStudent(studentId);
+        Student student = studentService.studentIdToStudent(studentId);
 
-        if (oldStudent == null) {
+        if (student == null) {
             return new Result("fail", "student not exist");
         }
 
         if (code != null && !code.equals("")) {
+            student.setCode(code);
             studentRepository.updateCodeByStudentId(code, studentId);
         }
 
         if (realName != null && !realName.equals("")) {
+            student.setRealName(realName);
             studentRepository.updateRealNameByStudentId(realName, studentId);
         }
 
-        Student newStudent = studentService.studentIdToStudent(studentId);
-
-        return new Result("success", "update student", newStudent);
+        return new Result("success", "update student", student);
 
     }
 }
