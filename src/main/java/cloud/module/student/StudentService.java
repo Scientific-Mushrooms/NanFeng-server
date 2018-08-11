@@ -29,4 +29,14 @@ public class StudentService {
         return student;
 
     }
+
+    public Iterable<Student> searchByRealName(String realName) {
+
+        String newName = "%" + realName + "%";
+
+        Iterable<Student> students = studentRepository.findByRealNameLike(newName);
+
+        return students;
+
+    }
 }

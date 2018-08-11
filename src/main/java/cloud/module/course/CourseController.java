@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class CourseController extends BaseController {
@@ -110,19 +112,32 @@ public class CourseController extends BaseController {
 
         if (name == null || name.equals("")) {
 
-            System.out.println(name);
-
             Iterable<Course> courses = courseRepository.findTop10ByOrderByName();
 
             return new Result("success", "find top 10", courses);
 
         }
 
-        String newName = "%" + name + "%";
-
-        Iterable<Course> courses = courseRepository.findByNameLike(newName);
+        Iterable<Course> courses = courseService.searchByName(name);
 
         return new Result("success", "search", courses);
+
+    }
+
+    @PostMapping("/course/autoComplete")
+    public Result autoComplete(HttpServletRequest request) {
+
+        String name = request.getParameter("name");
+
+        Iterable<Course> courses = courseService.searchByName(name);
+
+        List<String> names = new ArrayList();
+
+        for (Course course : courses) {
+            names.add(course.getName());
+        }
+
+        return new Result("success", "auto complete", names);
 
     }
 

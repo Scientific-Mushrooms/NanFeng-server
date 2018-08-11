@@ -34,6 +34,16 @@ public class CourseService {
 
     }
 
+    public Iterable<Course> searchByName(String name) {
+
+        String newName = "%" + name + "%";
+
+        Iterable<Course> courses = courseRepository.findByNameLike(newName);
+
+        return courses;
+
+    }
+
 
 
 

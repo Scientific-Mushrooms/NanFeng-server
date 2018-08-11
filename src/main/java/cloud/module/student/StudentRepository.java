@@ -20,4 +20,6 @@ public interface StudentRepository extends CrudRepository<Student, String> {
     @Query("update Student s set s.code = ?1 where s.studentId = ?2")
     @Transactional
     void updateCodeByStudentId(String code, String studentId);
+
+    Iterable<Student> findByRealNameLike(String realName);
 }

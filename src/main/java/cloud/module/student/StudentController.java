@@ -28,7 +28,7 @@ public class StudentController extends BaseController {
 
         Iterable<Student> students = studentRepository.findAll();
 
-        return new Result("success", "all students");
+        return new Result("success", "all students", students);
 
     }
 
@@ -106,4 +106,16 @@ public class StudentController extends BaseController {
         return new Result("success", "update student", student);
 
     }
+
+    @PostMapping("/student/searchByRealName")
+    public Result searchByRealName(HttpServletRequest request) {
+
+        String realName = request.getParameter("realName");
+
+        Iterable<Student> students = studentService.searchByRealName(realName);
+
+        return new Result("success", "search by real name", students);
+
+    }
+
 }

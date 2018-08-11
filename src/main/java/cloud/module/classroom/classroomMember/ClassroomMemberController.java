@@ -65,6 +65,19 @@ public class ClassroomMemberController extends BaseController {
     @PostMapping("/classroomMember/create")
     public Result create(@ModelAttribute ClassroomMember classroomMember) {
 
+        String classroomId = classroomMember.getClassroomId();
+        String studentId = classroomMember.getStudentId();
+
+        if (classroomId == null || classroomId.equals("")) {
+            return new Result("fail", "classroom id cannot be empty");
+        }
+
+        if (studentId == null || studentId.equals("")) {
+            return new Result("fail", "student id cannot be empty");
+        }
+
+        classroomMemberRepository.save(classroomMember);
+
         return new Result("success", "create member");
     }
 
