@@ -12,4 +12,7 @@ public interface ClassroomMemberRepository extends CrudRepository<ClassroomMembe
     void deleteByClassroomMemberId(String classroomMemberId);
 
     Iterable<ClassroomMember> findAllByClassroomId(String classroomId);
+
+    ClassroomMember findByStudentId(String studentId);
+
 }

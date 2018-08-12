@@ -1,6 +1,7 @@
 package cloud.common.image;
 
 
+import cloud.common.BaseController;
 import cloud.common.image.ImageRepository;
 import cloud.common.Result;
 import cloud.common.image.Image;
@@ -9,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
+import javax.annotation.Resource;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,7 +23,7 @@ import java.util.UUID;
 
 @Transactional
 @Service
-public class ImageService {
+public class ImageService extends BaseController {
 
     @Autowired
     private ImageRepository imageRepository;
@@ -169,6 +172,20 @@ public class ImageService {
     public void updateType(String type, String imageId) {
 
         imageRepository.updateTypeImageId(type, imageId);
+
+    }
+
+    public RedirectView imageIdToRedirect(String imageId) {
+
+        Image image = imageIdToImage(imageId);
+
+        String name = image.getName();
+
+        RedirectView redirectView = new RedirectView();
+
+        redirectView.setUrl(imagePath + name);
+
+        return redirectView;
 
     }
 

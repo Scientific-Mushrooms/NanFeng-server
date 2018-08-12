@@ -2,6 +2,10 @@ package cloud.common.image;
 
 import cloud.common.BaseController;
 import cloud.common.Result;
+import cloud.common.User.User;
+import cloud.common.User.UserService;
+import cloud.module.student.Student;
+import cloud.module.student.StudentService;
 import com.aliyun.oss.OSSClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
@@ -26,6 +30,13 @@ public class ImageController extends BaseController {
 
     @Resource
     private ImageService imageService;
+
+    @Resource
+    private UserService userService;
+
+    @Resource
+    private StudentService studentService;
+
 
     @PostMapping("/image/all")
     public Result all() {
@@ -104,24 +115,34 @@ public class ImageController extends BaseController {
     @GetMapping(value = { "/image/{imageId:.+}" })
     public RedirectView showImage(@PathVariable String imageId) {
 
-        Image image = imageService.imageIdToImage(imageId);
-
-        String name = image.getName();
-
-        RedirectView redirectView = new RedirectView();
-
-        redirectView.setUrl(imagePath + name);
+        RedirectView redirectView = imageService.imageIdToRedirect(imageId);
 
         return redirectView;
 
     }
 
-//    @GetMapping(value = { "/image/{filename:.+}" },
-//            produces = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_PNG_VALUE })
-//    public byte[] showImageById(@PathVariable String filename) {
-//
-//        return imageService.showImage(filename);
-//    }
+    @GetMapping(value = { "/image/userIdToAvatar/{userId}" })
+    public RedirectView userIdToAvatar(@PathVariable String userId) {
+
+        User user = userService.userIdToUser(userId);
+
+        RedirectView redirectView = imageService.imageIdToRedirect(user.getAvatarId());
+
+        return redirectView;
+
+    }
+
+    @GetMapping(value = { "/image/studentIdToAvatar/{studentId}" })
+    public RedirectView studentIdToAvatar(@PathVariable String studentId) {
+
+        User user = studentService.studentIdToUser(studentId);
+
+        RedirectView redirectView = imageService.imageIdToRedirect(user.getAvatarId());
+
+        return redirectView;
+
+    }
+
 
 }
 
