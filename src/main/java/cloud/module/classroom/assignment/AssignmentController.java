@@ -3,6 +3,8 @@ package cloud.module.classroom.assignment;
 
 import cloud.common.BaseController;
 import cloud.common.Result;
+import cloud.module.classroom.assignment.discussion.Discussion;
+import cloud.module.classroom.assignment.discussion.DiscussionService;
 import com.fasterxml.jackson.databind.ser.Serializers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,6 +23,9 @@ public class AssignmentController extends BaseController {
 
     @Resource
     private AssignmentService assignmentService;
+
+    @Resource
+    private DiscussionService discussionService;
 
 
     @PostMapping("/assignment/all")
@@ -42,10 +47,11 @@ public class AssignmentController extends BaseController {
     }
 
     @PostMapping("/assignment/create")
-    private Result create(@ModelAttribute Assignment assignment) {
+    private Result create(@ModelAttribute Assignment assignment, HttpServletRequest request) {
 
         String classroomId = assignment.getClassroomId();
         String type = assignment.getType();
+
 
         if (classroomId == null || classroomId.equals("")) {
             return new Result("fail", "classroom id cannot be empty");
@@ -55,13 +61,18 @@ public class AssignmentController extends BaseController {
             return new Result("fail", "type cannot be empty");
         }
 
+        if (type.equals("discussion")) {
+            String topic = request.getParameter("topic");
+            discussionService.create(assignment.getAssignmentId(), topic);
+        }
+
         assignmentRepository.save(assignment);
 
-        return new Result("success", "create assignment");
+        return new Result("success", "create assignment", assignment);
 
     }
 
-    @PostMapping("/assignement/assignmentItToAssignment")
+    @PostMapping("/assignment/assignmentItToAssignment")
     private Result assignmentItToAssignment(HttpServletRequest request) {
 
         String assignmentId = request.getParameter("assignmentId");

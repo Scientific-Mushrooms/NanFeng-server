@@ -84,7 +84,7 @@ public class ClassroomMemberController extends BaseController {
         String classroomId = classroomMember.getClassroomId();
         String studentId = classroomMember.getStudentId();
         Student student = studentService.studentIdToStudent(studentId);
-        ClassroomMember oldMember = classroomMemberService.studentIdToClassroomMember(studentId);
+        ClassroomMember oldMember = classroomMemberRepository.findByStudentIdAndClassroomId(studentId, classroomId);
 
         if (classroomId == null || classroomId.equals("")) {
             return new Result("fail", "classroom id cannot be empty");
@@ -98,7 +98,7 @@ public class ClassroomMemberController extends BaseController {
             return new Result("fail", "student doesn't exist");
         }
 
-        if (oldMember != null) {
+        if (oldMember != null && oldMember.getClassroomId().equals(classroomId)) {
             return new Result("fail", "classroom member already exist");
         }
 

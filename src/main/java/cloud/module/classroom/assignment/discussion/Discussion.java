@@ -19,6 +19,8 @@ public class Discussion {
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String discussionId;
 
+    private String assignmentId;
+
     private String topic;
 
 }

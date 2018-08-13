@@ -18,4 +18,6 @@ public class Quiz {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String quizId;
+
+
 }

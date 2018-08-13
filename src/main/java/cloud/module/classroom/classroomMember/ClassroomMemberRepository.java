@@ -15,4 +15,6 @@ public interface ClassroomMemberRepository extends CrudRepository<ClassroomMembe
 
     ClassroomMember findByStudentId(String studentId);
 
+    ClassroomMember findByStudentIdAndClassroomId(String studentId, String classroomId);
+
 }
