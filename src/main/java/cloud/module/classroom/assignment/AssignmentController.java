@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class AssignmentController extends BaseController {
@@ -40,7 +41,7 @@ public class AssignmentController extends BaseController {
 
     }
 
-    @PostMapping("/assignment/deleteAll")
+    @PostMapping("/assignment/create")
     private Result create(@ModelAttribute Assignment assignment) {
 
         String classroomId = assignment.getClassroomId();
@@ -57,6 +58,28 @@ public class AssignmentController extends BaseController {
         assignmentRepository.save(assignment);
 
         return new Result("success", "create assignment");
+
+    }
+
+    @PostMapping("/assignement/assignmentItToAssignment")
+    private Result assignmentItToAssignment(HttpServletRequest request) {
+
+        String assignmentId = request.getParameter("assignmentId");
+
+        Assignment assignment = assignmentService.assignmentIdToAssignment(assignmentId);
+
+        return new Result("success", "assignment id to assignment", assignment);
+
+    }
+
+    @PostMapping("/assignment/classroomIdToAllAssignments")
+    private Result classroomIdToAllAssignments(HttpServletRequest request) {
+
+        String classroomIdToAllAssignments = request.getParameter("classroomIdToAllAssignments");
+
+        Iterable<Assignment> assignments = assignmentService.classroomIdToAllAssignments(classroomIdToAllAssignments);
+
+        return new Result("success", "assignment id to assignment", assignments);
 
     }
 
