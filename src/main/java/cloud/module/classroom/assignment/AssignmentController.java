@@ -86,11 +86,11 @@ public class AssignmentController extends BaseController {
     @PostMapping("/assignment/classroomIdToAllAssignments")
     private Result classroomIdToAllAssignments(HttpServletRequest request) {
 
-        String classroomIdToAllAssignments = request.getParameter("classroomIdToAllAssignments");
+        String classroomId = request.getParameter("classroomId");
 
-        Iterable<Assignment> assignments = assignmentService.classroomIdToAllAssignments(classroomIdToAllAssignments);
+        Iterable<Assignment> assignments = assignmentService.classroomIdToAllAssignments(classroomId);
 
-        return new Result("success", "assignment id to assignment", assignments);
+        return new Result("success", "classroom id to all assignment", assignments);
 
     }
 
