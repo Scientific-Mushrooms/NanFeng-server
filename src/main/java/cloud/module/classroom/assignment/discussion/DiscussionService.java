@@ -28,4 +28,12 @@ public class DiscussionService {
 
     }
 
+    public Discussion assignmentIdToDiscussion(String assignmentId) {
+
+        Discussion discussion = discussionRepository.findByAssignmentId(assignmentId);
+
+        return discussion;
+
+    }
+
 }

@@ -22,6 +22,8 @@ public class Assignment {
 
     private String classroomId;
 
+    private String instructorId;
+
     private String name;
 
     private String type;

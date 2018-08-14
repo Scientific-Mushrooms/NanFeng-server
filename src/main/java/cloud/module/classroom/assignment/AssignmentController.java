@@ -50,8 +50,8 @@ public class AssignmentController extends BaseController {
     private Result create(@ModelAttribute Assignment assignment, HttpServletRequest request) {
 
         String classroomId = assignment.getClassroomId();
+        String instructorId = assignment.getInstructorId();
         String type = assignment.getType();
-
 
         if (classroomId == null || classroomId.equals("")) {
             return new Result("fail", "classroom id cannot be empty");
@@ -61,23 +61,33 @@ public class AssignmentController extends BaseController {
             return new Result("fail", "type cannot be empty");
         }
 
+        if (instructorId == null || instructorId.equals("")) {
+            return new Result("fail", "instructor id cannot be empty");
+        }
+
+        assignmentRepository.save(assignment);
+
         if (type.equals("discussion")) {
             String topic = request.getParameter("topic");
             discussionService.create(assignment.getAssignmentId(), topic);
         }
 
-        assignmentRepository.save(assignment);
-
         return new Result("success", "create assignment", assignment);
 
     }
 
-    @PostMapping("/assignment/assignmentItToAssignment")
-    private Result assignmentItToAssignment(HttpServletRequest request) {
+    @PostMapping("/assignment/assignmentIdToAssignment")
+    private Result assignmentIdToAssignment(HttpServletRequest request) {
 
         String assignmentId = request.getParameter("assignmentId");
 
         Assignment assignment = assignmentService.assignmentIdToAssignment(assignmentId);
+
+        Discussion discussion = discussionService.assignmentIdToDiscussion(assignmentId);
+
+        if (assignment.getType().equals("discussion")) {
+            return new Result("success", "assignment id to assignment and discussion", assignment, discussion);
+        }
 
         return new Result("success", "assignment id to assignment", assignment);
 
