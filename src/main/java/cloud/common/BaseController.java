@@ -31,5 +31,12 @@ public class BaseController {
         return date;
     }
 
+    public boolean isEmpty(String word) {
+        if (word == null || word.equals("")) {
+            return true;
+        }
+        return false;
+    }
+
 
 }

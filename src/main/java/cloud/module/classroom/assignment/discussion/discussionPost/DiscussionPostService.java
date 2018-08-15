@@ -14,4 +14,13 @@ public class DiscussionPostService {
     private DiscussionPostRepository discussionPostRepository;
 
 
+    public Iterable<DiscussionPost> discussionIdToAllDiscussionPosts(String discussionId) {
+
+        Iterable<DiscussionPost> discussionPosts = discussionPostRepository.findAllByDiscussionId(discussionId);
+
+        return discussionPosts;
+
+    }
+
+
 }

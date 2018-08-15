@@ -22,10 +22,10 @@ public class DiscussionPost {
 
     private String studentId;
 
-    private String assignmentId;
+    private String discussionId;
 
     private String content;
 
-    private Date date;
+    private Date date = new Date();
 
 }
