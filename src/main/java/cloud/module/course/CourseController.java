@@ -141,5 +141,19 @@ public class CourseController extends BaseController {
 
     }
 
+    @PostMapping("/course/deleteNull")
+    public Result deleteNull() {
+        Iterable<Course> all = courseRepository.findAll();
+        for (Course c : all) {
+            String name = c.getName();
+            if (name == null || name.equals("")) {
+                courseRepository.deleteByCourseId(c.getCourseId());
+            }
+        }
+        return new Result("success", "delete null");
+    }
+
+
+
 
 }
