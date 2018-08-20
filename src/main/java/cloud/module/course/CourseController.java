@@ -111,6 +111,7 @@ public class CourseController extends BaseController {
         String name = request.getParameter("name");
         String campus = request.getParameter("campus");
         String faculty = request.getParameter("faculty");
+        String type = request.getParameter("type");
 
         if (name == null || name.equals("")) {
 
@@ -129,6 +130,9 @@ public class CourseController extends BaseController {
                 continue;
             }
             if (!isEmpty(faculty) && !faculty.equals(c.getFaculty())) {
+                continue;
+            }
+            if (!isEmpty(type) && !type.equals(c.getType())) {
                 continue;
             }
             newCourses.add(c);
