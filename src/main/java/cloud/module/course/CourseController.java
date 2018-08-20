@@ -109,6 +109,8 @@ public class CourseController extends BaseController {
     public Result searchByName(HttpServletRequest request) {
 
         String name = request.getParameter("name");
+        String campus = request.getParameter("campus");
+        String faculty = request.getParameter("faculty");
 
         if (name == null || name.equals("")) {
 
@@ -120,7 +122,19 @@ public class CourseController extends BaseController {
 
         Iterable<Course> courses = courseService.searchByName(name);
 
-        return new Result("success", "search", courses);
+        ArrayList<Course> newCourses = new ArrayList();
+
+        for (Course c : courses) {
+            if (!isEmpty(campus) && !campus.equals(c.getCampus())) {
+                continue;
+            }
+            if (!isEmpty(faculty) && !faculty.equals(c.getFaculty())) {
+                continue;
+            }
+            newCourses.add(c);
+        }
+
+        return new Result("success", "search", newCourses);
 
     }
 
