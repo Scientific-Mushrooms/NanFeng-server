@@ -141,7 +141,7 @@ public class CourseController extends BaseController {
 
         if (isEmpty(strPage) || isEmpty(strSize)) {
             strPage = "0";
-            strSize = "10";
+            strSize = "20";
         }
 
         int page = Integer.parseInt(strPage);
