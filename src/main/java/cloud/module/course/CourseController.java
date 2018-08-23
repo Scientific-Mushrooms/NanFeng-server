@@ -136,37 +136,26 @@ public class CourseController extends BaseController {
     @PostMapping("/course/search")
     public Result searchByName(HttpServletRequest request) {
 
+        String strPage = request.getParameter("page");
+        String strSize = request.getParameter("size");
+
+        if (isEmpty(strPage) || isEmpty(strSize)) {
+            return new Result("fail", "page parameter cannot be empty");
+        }
+
+        int page = Integer.parseInt(request.getParameter("page"));
+        int size = Integer.parseInt(request.getParameter("size"));
+
+        Pageable pageable =new PageRequest(page, size);
+
         String name = request.getParameter("name");
         String campus = request.getParameter("campus");
         String faculty = request.getParameter("faculty");
         String type = request.getParameter("type");
 
-        if (name == null || name.equals("")) {
+        Page<Course> courses = courseService.searchByAll(name, type, campus, faculty, pageable);
 
-            Iterable<Course> courses = courseRepository.findTop10ByOrderByName();
-
-            return new Result("success", "find top 10", courses);
-
-        }
-
-        Iterable<Course> courses = courseService.searchByName(name);
-
-        ArrayList<Course> newCourses = new ArrayList();
-
-        for (Course c : courses) {
-            if (!isEmpty(campus) && !campus.equals(c.getCampus())) {
-                continue;
-            }
-            if (!isEmpty(faculty) && !faculty.equals(c.getFaculty())) {
-                continue;
-            }
-            if (!isEmpty(type) && !type.equals(c.getType())) {
-                continue;
-            }
-            newCourses.add(c);
-        }
-
-        return new Result("success", "search", newCourses);
+        return new Result("success", "auto complete", courses);
 
     }
 
