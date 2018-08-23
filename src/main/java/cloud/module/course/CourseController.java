@@ -140,11 +140,12 @@ public class CourseController extends BaseController {
         String strSize = request.getParameter("size");
 
         if (isEmpty(strPage) || isEmpty(strSize)) {
-            return new Result("fail", "page parameter cannot be empty");
+            strPage = "0";
+            strSize = "10";
         }
 
-        int page = Integer.parseInt(request.getParameter("page"));
-        int size = Integer.parseInt(request.getParameter("size"));
+        int page = Integer.parseInt(strPage);
+        int size = Integer.parseInt(strSize);
 
         Pageable pageable =new PageRequest(page, size);
 
