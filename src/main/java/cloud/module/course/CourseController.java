@@ -8,13 +8,18 @@ import cloud.common.image.ImageService;
 import cloud.module.course.courseComment.CourseComment;
 import cloud.module.course.courseComment.CourseCommentService;
 import cloud.module.instructor.InstructorService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +46,30 @@ public class CourseController extends BaseController {
     @PostMapping("/course/all")
     public Result all() {
 
-        Iterable<Course> courses = courseRepository.findAll();
+        Pageable pageable =new PageRequest(0, 5);
+
+        Page<Course> courses = courseRepository.findAll(pageable);
+
+        return new Result("success", "all courses", courses);
+
+    }
+
+    @PostMapping("/course/all/page")
+    public Result page(HttpServletRequest request) {
+
+        String strPage = request.getParameter("page");
+        String strSize = request.getParameter("size");
+
+        if (isEmpty(strPage) || isEmpty(strSize)) {
+            return new Result("fail", "page parameter cannot be empty");
+        }
+
+        int page = Integer.parseInt(request.getParameter("page"));
+        int size = Integer.parseInt(request.getParameter("size"));
+
+        Pageable pageable =new PageRequest(page, size);
+
+        Page<Course> courses = courseRepository.findAll(pageable);
 
         return new Result("success", "all courses", courses);
 
