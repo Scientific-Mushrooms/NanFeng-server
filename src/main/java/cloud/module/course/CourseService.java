@@ -29,6 +29,12 @@ public class CourseService {
 
     }
 
+    public Course codeToCourse(String code) {
+
+        return courseRepository.findByCode(code);
+
+    }
+
     public void deleteByCourseId(String courseId) {
 
         courseRepository.deleteByCourseId(courseId);

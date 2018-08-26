@@ -189,6 +189,23 @@ public class CourseController extends BaseController {
         return new Result("success", "delete null");
     }
 
+    @PostMapping("/course/updateByCode")
+    public Result updateByCode(@ModelAttribute Course course) {
+
+        String code = course.getCode();
+
+        if (isEmpty(code)) {
+            return new Result("fail", "code cannot be empty");
+        }
+
+        courseRepository.deleteByCode(code);
+
+        courseRepository.save(course);
+
+        return new Result("success", "update course", course);
+
+    }
+
 
 
 

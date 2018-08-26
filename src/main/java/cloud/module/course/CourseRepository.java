@@ -28,4 +28,9 @@ public interface CourseRepository extends CrudRepository<Course, String> {
     Page<Course> findByNameLikeAndTypeLikeAndCampusLikeAndFacultyLike(String name, String type, String campus, String faculty, Pageable pageable);
 
     boolean existsByCode(String code);
+
+    Course findByCode(String code);
+
+    @Transactional
+    void deleteByCode(String code);
 }
