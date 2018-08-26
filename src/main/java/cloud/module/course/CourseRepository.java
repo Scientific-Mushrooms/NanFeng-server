@@ -33,4 +33,9 @@ public interface CourseRepository extends CrudRepository<Course, String> {
 
     @Transactional
     void deleteByCode(String code);
+
+    @Modifying
+    @Query("update Course c set c.introduction = ?1 where c.code = ?2")
+    @Transactional
+    void updateIntroductionByCode(String introduction, String code);
 }

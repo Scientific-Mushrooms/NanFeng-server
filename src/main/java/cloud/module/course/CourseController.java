@@ -190,19 +190,18 @@ public class CourseController extends BaseController {
     }
 
     @PostMapping("/course/updateByCode")
-    public Result updateByCode(@ModelAttribute Course course) {
+    public Result updateByCode(HttpServletRequest request) {
 
-        String code = course.getCode();
+        String code = request.getParameter("code");
+        String introduction = request.getParameter("introduction");
 
         if (isEmpty(code)) {
             return new Result("fail", "code cannot be empty");
         }
 
-        courseRepository.deleteByCode(code);
+        courseRepository.updateIntroductionByCode(introduction, code);
 
-        courseRepository.save(course);
-
-        return new Result("success", "update course", course);
+        return new Result("success", "update course");
 
     }
 
