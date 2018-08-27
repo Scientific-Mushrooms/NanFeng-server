@@ -82,7 +82,7 @@ public class CourseService {
         }
 
         if (credit == null) {
-            campus = "";
+            credit = "";
         }
 
         String newName = "%" + name + "%";
