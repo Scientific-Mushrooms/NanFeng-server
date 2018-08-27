@@ -63,7 +63,7 @@ public class CourseService {
 
     }
 
-    public Page<Course> searchByAll(String name, String type, String campus, String faculty, Pageable pageable) {
+    public Page<Course> searchByAll(String name, String type, String campus, String faculty, String credit, Pageable pageable) {
 
         if (type == null) {
             type = "";
@@ -81,12 +81,17 @@ public class CourseService {
             campus = "";
         }
 
+        if (credit == null) {
+            campus = "";
+        }
+
         String newName = "%" + name + "%";
         String newType = "%" + type + "%";
         String newCampus = "%" + campus + "%";
         String newFaculty = "%" + faculty + "%";
+        String newCredit = "%" + credit + "%";
 
-        Page<Course> courses = courseRepository.findByNameLikeAndTypeLikeAndCampusLikeAndFacultyLike(newName, newType, newCampus, newFaculty, pageable);
+        Page<Course> courses = courseRepository.findByNameLikeAndTypeLikeAndCampusLikeAndFacultyLikeAndCreditLike(newName, newType, newCampus, newFaculty, newCredit, pageable);
 
         return courses;
 

@@ -26,6 +26,9 @@ public class Course {
     //课程名称
     private String name;
 
+    // 课程介绍
+    private String introduction;
+
     // 性质
     private String type;
 

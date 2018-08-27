@@ -25,7 +25,7 @@ public interface CourseRepository extends CrudRepository<Course, String> {
 
     Iterable<Course> findByNameLike(String name);
 
-    Page<Course> findByNameLikeAndTypeLikeAndCampusLikeAndFacultyLike(String name, String type, String campus, String faculty, Pageable pageable);
+    Page<Course> findByNameLikeAndTypeLikeAndCampusLikeAndFacultyLikeAndCreditLike(String name, String type, String campus, String faculty, String credit, Pageable pageable);
 
     boolean existsByCode(String code);
 

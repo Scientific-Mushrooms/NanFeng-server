@@ -153,8 +153,9 @@ public class CourseController extends BaseController {
         String campus = request.getParameter("campus");
         String faculty = request.getParameter("faculty");
         String type = request.getParameter("type");
+        String credit = request.getParameter("credit");
 
-        Page<Course> courses = courseService.searchByAll(name, type, campus, faculty, pageable);
+        Page<Course> courses = courseService.searchByAll(name, type, campus, faculty, credit, pageable);
 
         return new Result("success", "auto complete", courses);
 
