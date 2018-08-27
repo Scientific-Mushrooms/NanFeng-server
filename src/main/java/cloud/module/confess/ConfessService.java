@@ -47,4 +47,11 @@ public class ConfessService {
 
         return confesses;
     }
+
+    public void incLove(String confessId) {
+
+        Confess confess = confessRepository.findByConfessId(confessId);
+
+        confess.setLove(confess.getLove() + 1);
+    }
 }

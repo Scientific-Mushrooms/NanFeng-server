@@ -133,12 +133,12 @@ public class ConfessController extends BaseController {
 
     }
 
-    @PostMapping("/confess/Love")
+    @PostMapping("/confess/love")
     public Result love(HttpServletRequest request) {
 
         String confessId = request.getParameter("confessId");
 
-        confessService.confessIdToConfess(confessId).setLove(confessService.confessIdToConfess(confessId).getLove() + 1);
+        confessService.incLove(confessId);
 
         return new Result("success", "love number increased");
 
