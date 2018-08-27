@@ -116,5 +116,32 @@ public class CourseCommentController extends BaseController {
 
     }
 
+    /*@PostMapping("/courseCommend/recommend/enjoy")
+    public Result recommendByEnjoy(HttpServletRequest request) {
+
+        String strPage = request.getParameter("page");
+        String strSize = request.getParameter("size");
+
+        if (isEmpty(strPage) || isEmpty(strSize)) {
+            strPage = "0";
+            strSize = "20";
+        }
+
+        int page = Integer.parseInt(strPage);
+        int size = Integer.parseInt(strSize);
+
+        Pageable pageable =new PageRequest(page, size);
+
+        String name = request.getParameter("name");
+        String campus = request.getParameter("campus");
+        String faculty = request.getParameter("faculty");
+        String type = request.getParameter("type");
+
+        Page<Course> courses = courseService.searchByAll(name, type, campus, faculty, pageable);
+
+        return new Result("success", "auto complete", courses);
+
+    }*/
+
 
 }

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -75,4 +77,83 @@ public class ConfessController extends BaseController {
 
     }
 
+    @PostMapping("/confess/searchByType")
+    public Result searchByType(HttpServletRequest request) {
+
+        String type = request.getParameter("type");
+
+        Iterable<Confess> confesses = confessService.searchByType(type);
+
+        return new Result("success", "search by type", confesses);
+
+    }
+
+    @PostMapping("/confess/autoCompleteByType")
+    public Result autoCompleteByType(HttpServletRequest request) {
+
+        String type = request.getParameter("type");
+
+        Iterable<Confess> confesses = confessService.searchByType(type);
+
+        List<String> types = new ArrayList();
+
+        for (Confess confess : confesses) {
+            types.add(confess.getType());
+        }
+
+        return new Result("success", "auto complete", types);
+
+    }
+
+    @PostMapping("/confess/searchByContent")
+    public Result searchByContent(HttpServletRequest request) {
+
+        String content = request.getParameter("content");
+
+        Iterable<Confess> confesses = confessService.searchByContent(content);
+
+        return new Result("success", "search by content", confesses);
+
+    }
+
+    @PostMapping("/confess/autoCompleteByContent")
+    public Result autoCompleteByContent(HttpServletRequest request) {
+
+        String content = request.getParameter("content");
+
+        Iterable<Confess> confesses = confessService.searchByContent(content);
+
+        List<String> contents = new ArrayList();
+
+        for (Confess confess : confesses) {
+            contents.add(confess.getContent());
+        }
+
+        return new Result("success", "auto complete", contents);
+
+    }
+
+    @PostMapping("/confess/Love")
+    public Result love(HttpServletRequest request) {
+
+        String confessId = request.getParameter("confessId");
+
+        confessService.confessIdToConfess(confessId).setLove(confessService.confessIdToConfess(confessId).getLove() + 1);
+
+        return new Result("success", "love number increased");
+
+    }
+
+    @PostMapping("/confess/undoLove")
+    public Result undoLike(HttpServletRequest request) {
+
+        String confessId = request.getParameter("confessId");
+
+        if (confessService.confessIdToConfess(confessId).getLove() > 0){
+            confessService.confessIdToConfess(confessId).setLove(confessService.confessIdToConfess(confessId).getLove() - 1);
+        }
+
+        return new Result("success", "love cancelled");
+
+    }
 }
