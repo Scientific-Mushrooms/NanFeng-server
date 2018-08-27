@@ -1,5 +1,4 @@
-package cloud.module.confess;
-
+package cloud.module.confess.confessComment;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
@@ -11,24 +10,21 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name = "confess")
+@Table(name = "ConfessComment")
 @Data
-public class Confess {
+public class ConfessComment {
 
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private String confessId;
+    private String confessCommentId;
 
     private String userId;
 
-    private boolean anonymous;
+    private String confessId;
 
-    private String content;
+    private String comment;
 
-    private String type;
+    private Date date;
 
-    private Date date = new Date();
-
-    private int love=0;
 }

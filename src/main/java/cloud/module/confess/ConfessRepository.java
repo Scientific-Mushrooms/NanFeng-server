@@ -10,4 +10,8 @@ public interface ConfessRepository extends CrudRepository<Confess, String> {
 
     @Transactional
     void deleteByConfessId(String confessId);
+
+    Iterable<Confess> findByTypeLike(String type);
+
+    Iterable<Confess> findByContentLike(String content);
 }

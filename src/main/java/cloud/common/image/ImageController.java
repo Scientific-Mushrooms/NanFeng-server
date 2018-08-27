@@ -43,7 +43,7 @@ public class ImageController extends BaseController {
 
         Iterable<Image> images = imageRepository.findAll();
 
-        return new Result("success", "all images", images);
+        return new Result("success", "all images ", images);
 
     }
 
