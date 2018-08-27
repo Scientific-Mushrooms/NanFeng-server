@@ -24,6 +24,7 @@ public class SectionController extends BaseController {
     @Resource
     private InstructorService instructorService;
 
+
     @PostMapping("/section/all")
     public Result all(HttpServletRequest request) {
 
@@ -87,9 +88,26 @@ public class SectionController extends BaseController {
     }
 
     @PostMapping("/section/create")
-    public Result create(@ModelAttribute Section section) {
+    public Result create(@ModelAttribute Section section, HttpServletRequest request) {
 
-        section.setEnrolledStudentNum(0);
+        String courseId = section.getCourseId();
+        String realName = request.getParameter("realName");
+
+        if (isEmpty(courseId)) {
+            return new Result("fail", "course id cannot be empty");
+        }
+
+        if (isEmpty(realName)) {
+            return new Result("fail", "real name cannot be empty");
+        }
+
+        Instructor instructor = instructorService.realNameToInstructor(realName);
+
+        if (instructor == null) {
+            instructor = instructorService.save(realName);
+        }
+
+        section.setInstructorId(instructor.getInstructorId());
 
         sectionRepository.save(section);
 

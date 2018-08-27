@@ -4,6 +4,7 @@ import cloud.common.BaseController;
 import cloud.common.Result;
 import cloud.common.User.User;
 import cloud.common.User.UserService;
+import cloud.module.course.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,9 @@ public class CourseCommentController extends BaseController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private CourseService courseService;
 
     @PostMapping("/courseComment/all")
     public Result all(HttpServletRequest request) {
@@ -108,13 +112,28 @@ public class CourseCommentController extends BaseController {
             return new Result("fail", "course id or user id can not be empty");
         }
 
+        String courseId = courseComment.getCourseId();
+
         courseComment.setDate(new Date());
+
+        if (courseComment.getEasy()) {
+            courseService.easyNumAddOne(courseId);
+        }
+
+        if (courseComment.getUseful()) {
+            courseService.usefulNumAddOne(courseId);
+        }
+
+        if (courseComment.getEnjoy()) {
+            courseService.enjoyNumAddOne(courseId);
+        }
 
         courseCommentRepository.save(courseComment);
 
         return new Result("success", "create courseComment", courseComment);
 
     }
+
 
     /*@PostMapping("/courseCommend/recommend/enjoy")
     public Result recommendByEnjoy(HttpServletRequest request) {

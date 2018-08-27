@@ -97,6 +97,48 @@ public class CourseService {
 
     }
 
+    public void enjoyNumAddOne(String courseId) {
+
+        Course course = courseIdToCourse(courseId);
+
+        Integer newNum = course.getEnjoyNum();
+
+        if (newNum == null) {
+            newNum = 0;
+        }
+
+        courseRepository.updateEnjoyNumByCourseId(newNum, courseId);
+
+    }
+
+    public void usefulNumAddOne(String courseId) {
+
+        Course course = courseIdToCourse(courseId);
+
+        Integer newNum = course.getUsefulNum();
+
+        if (newNum == null) {
+            newNum = 0;
+        }
+
+        courseRepository.updateUsefulNumByCourseId(newNum, courseId);
+
+    }
+
+    public void easyNumAddOne(String courseId) {
+
+        Course course = courseIdToCourse(courseId);
+
+        Integer newNum = course.getEasyNum();
+
+        if (newNum == null) {
+            newNum = 0;
+        }
+
+        courseRepository.updateEasyNumByCourseId(newNum, courseId);
+
+    }
+
 
 
 
