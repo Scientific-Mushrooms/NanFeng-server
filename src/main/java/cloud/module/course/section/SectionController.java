@@ -3,6 +3,9 @@ package cloud.module.course.section;
 
 import cloud.common.BaseController;
 import cloud.common.Result;
+import cloud.module.course.Course;
+import cloud.module.course.CourseRepository;
+import cloud.module.course.CourseService;
 import cloud.module.instructor.Instructor;
 import cloud.module.instructor.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,9 @@ public class SectionController extends BaseController {
 
     @Resource
     private InstructorService instructorService;
+
+    @Resource
+    private CourseService courseService;
 
 
     @PostMapping("/section/all")
@@ -90,11 +96,11 @@ public class SectionController extends BaseController {
     @PostMapping("/section/create")
     public Result create(@ModelAttribute Section section, HttpServletRequest request) {
 
-        String courseId = section.getCourseId();
+        String code = request.getParameter("code");
         String realName = request.getParameter("realName");
 
-        if (isEmpty(courseId)) {
-            return new Result("fail", "course id cannot be empty");
+        if (isEmpty(code)) {
+            return new Result("fail", "course code cannot be empty");
         }
 
         if (isEmpty(realName)) {
@@ -102,11 +108,17 @@ public class SectionController extends BaseController {
         }
 
         Instructor instructor = instructorService.realNameToInstructor(realName);
+        Course course = courseService.codeToCourse(code);
+
+        if (course == null) {
+            return new Result("fail", "course not exist");
+        }
 
         if (instructor == null) {
             instructor = instructorService.save(realName);
         }
 
+        section.setCourseId(course.getCourseId());
         section.setInstructorId(instructor.getInstructorId());
 
         sectionRepository.save(section);
