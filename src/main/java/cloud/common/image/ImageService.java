@@ -70,6 +70,16 @@ public class ImageService extends BaseController {
 
     }
 
+    public Iterable<Image> parentIdToAllImages(String parentId) {
+
+        Iterable<Image> images = imageRepository.findAllByParentId(parentId);
+
+        return images;
+
+    }
+
+
+
     public Image saveImage(MultipartFile file, String parentId, String type) {
 
         String target;

@@ -88,6 +88,17 @@ public class ImageController extends BaseController {
 
     }
 
+    @PostMapping("/image/parentIdToAllImages")
+    public Result parentIdToAllImages(HttpServletRequest request) {
+
+        String parentId = request.getParameter("parentId");
+
+        Iterable<Image> images = imageService.parentIdToAllImages(parentId);
+
+        return new Result("success", "parent id to all images", images);
+
+    }
+
     @PostMapping("/image/saveImage")
     public Result saveImage(HttpServletRequest request, @RequestParam("image") MultipartFile image) {
 

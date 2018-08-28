@@ -2,10 +2,13 @@ package cloud.module.confess;
 
 import cloud.common.BaseController;
 import cloud.common.Result;
+import cloud.common.image.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +25,9 @@ public class ConfessController extends BaseController {
 
     @Resource
     private ConfessService confessService;
+
+    @Resource
+    private ImageService imageService;
 
 
     @PostMapping("/confess/all")
@@ -43,13 +49,15 @@ public class ConfessController extends BaseController {
     }
 
     @PostMapping("/confess/create")
-    public Result create(@ModelAttribute Confess confess) {
+    public Result create(@ModelAttribute Confess confess, @RequestParam("image") MultipartFile[] images) {
 
         if (isEmpty(confess.getUserId())) {
             return new Result("fail", "user id cannot be empty");
         }
 
         confessRepository.save(confess);
+
+        imageService.saveImages(images, confess.getConfessId(), "confess");
 
         return new Result("success", "create confess", confess);
 
