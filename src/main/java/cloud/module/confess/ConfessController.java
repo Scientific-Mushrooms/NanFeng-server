@@ -27,7 +27,7 @@ public class ConfessController extends BaseController {
     @PostMapping("/confess/all")
     public Result all() {
 
-        Iterable<Confess> confesses = confessRepository.findAll();
+        Iterable<Confess> confesses = confessRepository.findAllByOrderByDateDesc();
 
         return new Result("success", "all confesses", confesses);
 

@@ -14,4 +14,6 @@ public interface ConfessRepository extends CrudRepository<Confess, String> {
     Iterable<Confess> findByTypeLike(String type);
 
     Iterable<Confess> findByContentLike(String content);
+
+    Iterable<Confess> findAllByOrderByDateDesc();
 }
