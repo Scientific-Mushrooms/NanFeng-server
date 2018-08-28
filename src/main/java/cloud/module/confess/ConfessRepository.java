@@ -11,9 +11,9 @@ public interface ConfessRepository extends CrudRepository<Confess, String> {
     @Transactional
     void deleteByConfessId(String confessId);
 
-    Iterable<Confess> findByTypeLike(String type);
+    Iterable<Confess> findByTypeLikeOrderByDateDesc(String type);
 
-    Iterable<Confess> findByContentLike(String content);
+    Iterable<Confess> findByContentLikeOrderByDateDesc(String content);
 
     Iterable<Confess> findAllByOrderByDateDesc();
 }

@@ -34,7 +34,7 @@ public class ConfessService {
 
         String newType = "%" + type + "%";
 
-        Iterable<Confess> confesses = confessRepository.findByTypeLike(newType);
+        Iterable<Confess> confesses = confessRepository.findByTypeLikeOrderByDateDesc(newType);
 
         return confesses;
     }
@@ -43,7 +43,7 @@ public class ConfessService {
 
         String newContent = "%" + content + "%";
 
-        Iterable<Confess> confesses = confessRepository.findByContentLike(newContent);
+        Iterable<Confess> confesses = confessRepository.findByContentLikeOrderByDateDesc(newContent);
 
         return confesses;
     }
