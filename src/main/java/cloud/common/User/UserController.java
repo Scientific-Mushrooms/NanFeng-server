@@ -76,7 +76,7 @@ public class UserController extends BaseController {
             return new Result("fail", "duplicate email");
         }
 
-        user.setAvatarId("e5bbf508-a037-4a0f-8f4f-1ead05555eef");
+        user.setAvatarId("b31ab073-b1d6-4369-b113-4ad8ab908d0a");
 
         userRepository.save(user);
 
