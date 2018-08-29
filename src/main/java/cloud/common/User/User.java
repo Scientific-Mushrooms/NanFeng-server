@@ -21,6 +21,6 @@ public class User {
 
     private String nickName;
 
-    private String avatarId = "b31ab073-b1d6-4369-b113-4ad8ab908d0a";
+    private String avatarId;
 
 }
