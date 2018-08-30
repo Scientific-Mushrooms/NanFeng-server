@@ -1,4 +1,4 @@
-package cloud.module.schoolView;
+/*package cloud.module.schoolActivity;
 
 
 import lombok.Data;
@@ -11,21 +11,21 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name = "SchoolView")
+@Table(name = "SchoolActivity")
 @Data
-public class SchoolView {
+public class SchoolActivity {
 
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
 
-    private String schoolViewId;
+    private String schoolActivityId;
+
+    private String avatarId;
 
     private String type;
 
     private String content;
 
     private Date date = new Date();
-
-    private int love = 0;
-}
+}*/

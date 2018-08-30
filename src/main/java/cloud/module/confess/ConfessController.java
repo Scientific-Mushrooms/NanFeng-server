@@ -146,6 +146,10 @@ public class ConfessController extends BaseController {
 
         String confessId = request.getParameter("confessId");
 
+        if (confessService.confessIdToConfess(confessId) == null){
+            return new Result("fail", "confess does not exist");
+        }
+
         confessService.confessIdToConfess(confessId).setLove(confessService.confessIdToConfess(confessId).getLove() + 1);
 
         return new Result("success", "love number increased");
@@ -153,7 +157,7 @@ public class ConfessController extends BaseController {
     }
 
     @PostMapping("/confess/undoLove")
-    public Result undoLike(HttpServletRequest request) {
+    public Result undoLove(HttpServletRequest request) {
 
         String confessId = request.getParameter("confessId");
 
