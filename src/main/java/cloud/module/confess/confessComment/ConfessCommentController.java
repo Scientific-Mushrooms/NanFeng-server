@@ -1,5 +1,6 @@
 package cloud.module.confess.confessComment;
 
+import cloud.common.BaseController;
 import cloud.common.Result;
 import cloud.common.User.User;
 import cloud.common.User.UserService;
@@ -18,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-public class ConfessCommentController {
+public class ConfessCommentController extends BaseController {
 
     @Autowired
     private ConfessCommentRepository confessCommentRepository;

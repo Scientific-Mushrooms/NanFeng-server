@@ -206,6 +206,33 @@ public class CourseController extends BaseController {
 
     }
 
+    @PostMapping("/course/easy")
+    public Result easy() {
+
+        Iterable<Course> courses = courseRepository.findTop20OByOrderByEasyNumAsc();
+
+        return new Result("success", "easy", courses);
+
+    }
+
+    @PostMapping("/course/useful")
+    public Result useful() {
+
+        Iterable<Course> courses = courseRepository.findTop20OByOrderByUsefulNumAsc();
+
+        return new Result("success", "easy", courses);
+
+    }
+
+    @PostMapping("/course/enjoy")
+    public Result enjoy() {
+
+        Iterable<Course> courses = courseRepository.findTop20OByOrderByEnjoyNumAsc();
+
+        return new Result("success", "easy", courses);
+
+    }
+
 
 
 

@@ -62,5 +62,10 @@ public class Course {
     // 其他要求
     private String other;
 
+    private Integer enjoyNum = 0;
+
+    private Integer usefulNum = 0;
+
+    private Integer easyNum = 0;
 
 }

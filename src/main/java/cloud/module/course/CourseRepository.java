@@ -38,4 +38,26 @@ public interface CourseRepository extends CrudRepository<Course, String> {
     @Query("update Course c set c.introduction = ?1 where c.code = ?2")
     @Transactional
     void updateIntroductionByCode(String introduction, String code);
+
+    @Modifying
+    @Query("update Course c set c.enjoyNum= ?1 where c.courseId = ?2")
+    @Transactional
+    void updateEnjoyNumByCourseId(int enjoyNum, String courseId);
+
+    @Modifying
+    @Query("update Course c set c.usefulNum= ?1 where c.courseId = ?2")
+    @Transactional
+    void updateUsefulNumByCourseId(int enjoyNum, String courseId);
+
+    @Modifying
+    @Query("update Course c set c.easyNum= ?1 where c.courseId = ?2")
+    @Transactional
+    void updateEasyNumByCourseId(int easyNum, String courseId);
+
+    Iterable<Course> findTop20OByOrderByEnjoyNumAsc();
+
+    Iterable<Course> findTop20OByOrderByUsefulNumAsc();
+
+    Iterable<Course> findTop20OByOrderByEasyNumAsc();
+
 }

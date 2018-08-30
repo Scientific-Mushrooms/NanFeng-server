@@ -29,6 +29,7 @@ public class CourseService {
 
     }
 
+
     public Course codeToCourse(String code) {
 
         return courseRepository.findByCode(code);
@@ -82,7 +83,7 @@ public class CourseService {
         }
 
         if (credit == null) {
-            campus = "";
+            credit = "";
         }
 
         String newName = "%" + name + "%";
@@ -94,6 +95,48 @@ public class CourseService {
         Page<Course> courses = courseRepository.findByNameLikeAndTypeLikeAndCampusLikeAndFacultyLikeAndCreditLike(newName, newType, newCampus, newFaculty, newCredit, pageable);
 
         return courses;
+
+    }
+
+    public void enjoyNumAddOne(String courseId) {
+
+        Course course = courseIdToCourse(courseId);
+
+        Integer newNum = course.getEnjoyNum();
+
+        if (newNum == null) {
+            newNum = 0;
+        }
+
+        courseRepository.updateEnjoyNumByCourseId(newNum, courseId);
+
+    }
+
+    public void usefulNumAddOne(String courseId) {
+
+        Course course = courseIdToCourse(courseId);
+
+        Integer newNum = course.getUsefulNum();
+
+        if (newNum == null) {
+            newNum = 0;
+        }
+
+        courseRepository.updateUsefulNumByCourseId(newNum, courseId);
+
+    }
+
+    public void easyNumAddOne(String courseId) {
+
+        Course course = courseIdToCourse(courseId);
+
+        Integer newNum = course.getEasyNum();
+
+        if (newNum == null) {
+            newNum = 0;
+        }
+
+        courseRepository.updateEasyNumByCourseId(newNum, courseId);
 
     }
 
