@@ -4,13 +4,16 @@ import cloud.common.BaseController;
 import cloud.common.Result;
 import cloud.common.User.User;
 import cloud.common.User.UserService;
+import cloud.common.image.ImageService;
 import cloud.module.confess.confessComment.ConfessComment;
 import cloud.module.confess.confessComment.ConfessCommentRepository;
 import cloud.module.confess.confessComment.ConfessCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +32,9 @@ public class ConfessCommentController extends BaseController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private ImageService imageService;
 
     @PostMapping("/confessComment/all")
     public Result all(HttpServletRequest request) {
@@ -103,7 +109,7 @@ public class ConfessCommentController extends BaseController {
     }
 
     @PostMapping("/confessComment/create")
-    public Result create(@ModelAttribute ConfessComment confessComment) {
+    public Result create(@ModelAttribute ConfessComment confessComment, @RequestParam("image") MultipartFile[] images) {
 
         // verify parameters
         if (confessComment.getConfessId() == null || confessComment.getUserId() == null) {
@@ -113,6 +119,8 @@ public class ConfessCommentController extends BaseController {
         confessComment.setDate(new Date());
 
         confessCommentRepository.save(confessComment);
+
+        imageService.saveImages(images, confessComment.getConfessCommentId(), "confessComment");
 
         return new Result("success", "create confessComment", confessComment);
 

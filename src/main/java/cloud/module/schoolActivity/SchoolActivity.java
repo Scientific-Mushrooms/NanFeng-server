@@ -1,4 +1,4 @@
-/*package cloud.module.schoolActivity;
+package cloud.module.schoolActivity;
 
 
 import lombok.Data;
@@ -21,11 +21,11 @@ public class SchoolActivity {
 
     private String schoolActivityId;
 
-    private String title;
-
     private String type;
+
+    private String title;
 
     private String subTitle;
 
     private Date date = new Date();
-}*/
+}

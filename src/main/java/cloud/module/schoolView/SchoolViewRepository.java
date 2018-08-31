@@ -11,4 +11,5 @@ public interface SchoolViewRepository extends CrudRepository<SchoolView, String>
     @Transactional
     void deleteBySchoolViewId(String schoolViewId);
 
+    Iterable<SchoolView> findAllByOrderByDateDesc();
 }

@@ -29,7 +29,7 @@ public class SchoolViewController extends BaseController {
     @PostMapping("/schoolView/all")
     public Result all() {
 
-        Iterable<SchoolView> schoolViews = schoolViewRepository.findAll();
+        Iterable<SchoolView> schoolViews = schoolViewRepository.findAllByOrderByDateDesc();
 
         return new Result("success", "all schoolViews", schoolViews);
 
