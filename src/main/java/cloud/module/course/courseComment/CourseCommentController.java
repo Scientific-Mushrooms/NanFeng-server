@@ -4,6 +4,7 @@ import cloud.common.BaseController;
 import cloud.common.Result;
 import cloud.common.User.User;
 import cloud.common.User.UserService;
+import cloud.module.course.Course;
 import cloud.module.course.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -109,12 +110,19 @@ public class CourseCommentController extends BaseController {
 
         // verify parameters
         if (courseComment.getCourseId() == null || courseComment.getUserId() == null) {
-            return new Result("fail", "course id or user id can not be empty");
+            return new Result("fail", "course id and user id can not be empty");
         }
 
         String courseId = courseComment.getCourseId();
+        Course course = courseService.courseIdToCourse(courseId);
+
+        if (course == null) {
+            return new Result("fail", "course not exist");
+        }
 
         courseComment.setDate(new Date());
+
+
 
         if (courseComment.getEasy()) {
             courseService.easyNumAddOne(courseId);
